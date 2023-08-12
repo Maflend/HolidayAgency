@@ -1,10 +1,39 @@
-﻿namespace HA.Api.Dtos;
+﻿using HA.Domain.Models;
+
+namespace HA.Api.Dtos;
 
 public class CreateOrderDto
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string MiddleName { get; set; }
+    public FullName FullName { get; set; }
     public string Phone { get; set; }
     public DateTime EventDate { get; set; }
+    public double CountHourse { get; set; }
+    public string Address { get; set; }
+
+    public Guid CategoryId { get; set; }
+}
+
+
+public class ChangeOrderStateDto
+{
+    public OrderState State { get; set; }
+}
+
+public class GetOrderDto
+{
+    public Guid Id { get; set; }
+    public FullName FullName { get; set; }
+    public string Phone { get; set; }
+    public DateTime EventDate { get; set; }
+    public OrderState State { get; set; }
+    public double CountHourse { get; set; }
+    public string Address { get; set; }
+
+    public OrderCategoryDto Category { get; set; }
+}
+
+public class OrderCategoryDto
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
 }
