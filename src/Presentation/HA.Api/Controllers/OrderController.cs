@@ -7,7 +7,7 @@ using System.Data;
 namespace HA.Api.Controllers;
 
 //TODO: Две api. Один для клиента. Второй для админки.
-[Route("api/[controller]")]
+[Route("api/orders")]
 [ApiController]
 public class OrderController : ControllerBase
 {
@@ -16,14 +16,8 @@ public class OrderController : ControllerBase
 
     }
 
-    [HttpGet("categories5")]
-    public Category[] GetCategories()
-    {
-        return DataStorage.Categories.ToArray();
-    }
-
-    [HttpGet("page")]
-    public ActionResult<List<GetOrderDto>> GetByPage()
+    [HttpGet]
+    public ActionResult<List<GetOrderDto>> GetOrders()
     {
         return Ok(DataStorage.Orders.Select(order => new GetOrderDto()
         {
