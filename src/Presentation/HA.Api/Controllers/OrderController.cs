@@ -1,6 +1,8 @@
 ﻿using HA.Api.Dtos;
+using HA.Domain.Enums;
 using HA.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace HA.Api.Controllers;
 
@@ -14,19 +16,32 @@ public class OrderController : ControllerBase
 
     }
 
+    [HttpGet("categories5")]
+    public Category[] GetCategories()
+    {
+        return DataStorage.Categories.ToArray();
+    }
+
+    [HttpGet("page")]
     public ActionResult<List<GetOrderDto>> GetByPage()
     {
         return Ok(DataStorage.Orders.Select(order => new GetOrderDto()
         {
             Id = order.Id,
-            FullName = order.FullName,
-            Phone = order.Phone,
             EventDate = order.EventDate,
             State = order.State,
+            CountHourse = order.CountHours,
+            Address = order.Address,
             Category = new OrderCategoryDto()
             {
                 Id = order.Category.Id,
                 Name = order.Category.Name
+            },
+            Client = new OrderClientDto()
+            {
+                Id = order.ClientId,
+                FullName = order.Client.FullName,
+                Phone = order.Client.Phone
             }
         }));
     }
@@ -45,21 +60,27 @@ public class OrderController : ControllerBase
         var getOrderDto = new GetOrderDto()
         {
             Id = id,
-            FullName = order.FullName,
-            Phone = order.Phone,
             EventDate = order.EventDate,
             State = order.State,
+            CountHourse = order.CountHours,
+            Address = order.Address,
             Category = new OrderCategoryDto()
             {
-                Id = order.Category.Id,
+                Id = order.CategoryId,
                 Name = order.Category.Name
+            },
+            Client = new OrderClientDto()
+            {
+                Id = order.ClientId,
+                FullName = order.Client.FullName,
+                Phone = order.Client.Phone
             }
         };
 
         return Ok(getOrderDto);
     }
 
-    [HttpPost()]
+    [HttpPost]
     public IActionResult CreateOrderAsync(CreateOrderDto createOrderDto)
     {
         var category = DataStorage.Categories.FirstOrDefault(c => c.Id == createOrderDto.CategoryId);
@@ -69,17 +90,29 @@ public class OrderController : ControllerBase
             return NotFound("Категория не найдена");
         }
 
+        var client = DataStorage.Clients.FirstOrDefault(c => c.Phone == createOrderDto.Phone);
+
+        if (client is null)
+        {
+            client = new Client()
+            {
+                FullName = createOrderDto.FullName,
+                Phone = createOrderDto.Phone,
+                Id = Guid.NewGuid()
+            };
+        }
+
         var order = new Order()
         {
             Id = Guid.NewGuid(),
-            FullName = createOrderDto.FullName,
-            Phone = createOrderDto.Phone,
             EventDate = createOrderDto.EventDate,
-            CategoryId = createOrderDto.CategoryId,
-            Category = category,
             State = OrderState.New,
             Address = createOrderDto.Address,
-            CountHours = createOrderDto.CountHourse
+            CountHours = createOrderDto.CountHourse,
+            ClientId = client.Id,
+            Client = client,
+            CategoryId = createOrderDto.CategoryId,
+            Category = category,
         };
 
         DataStorage.Orders.Add(order);
