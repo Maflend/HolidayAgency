@@ -1,10 +1,11 @@
 ﻿using HA.Api.Dtos;
+using HA.Api.Routes;
 using HA.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HA.Api.Controllers;
+namespace HA.Api.Controllers.User;
 
-[Route("api/categories")]
+[Route(UserRoute.CategoryRoute.Base)]
 [ApiController]
 public class CategoryController : ControllerBase
 {
@@ -23,7 +24,7 @@ public class CategoryController : ControllerBase
         }).ToList();
     }
 
-    [HttpGet("{id}/orders")]
+    [HttpGet(UserRoute.CategoryRoute.GetOrders)]
     public IReadOnlyList<GetOrderDto> GetOrders([FromRoute] Guid id)
     {
         return DataStorage.Orders

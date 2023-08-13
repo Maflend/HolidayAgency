@@ -1,13 +1,13 @@
 ﻿using HA.Api.Dtos;
+using HA.Api.Routes;
 using HA.Domain.Enums;
 using HA.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
-namespace HA.Api.Controllers;
+namespace HA.Api.Controllers.User;
 
-//TODO: Две api. Один для клиента. Второй для админки.
-[Route("api/orders")]
+[Route(UserRoute.OrderRoute.Base)]
 [ApiController]
 public class OrderController : ControllerBase
 {
@@ -17,7 +17,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<GetOrderDto>> GetOrders()
+    public ActionResult<List<GetOrderDto>> GetAll()
     {
         return Ok(DataStorage.Orders.Select(order => new GetOrderDto()
         {
@@ -40,7 +40,7 @@ public class OrderController : ControllerBase
         }));
     }
 
-    [HttpGet("{id}")]
+    [HttpGet(UserRoute.OrderRoute.GetById)]
     public ActionResult<GetOrderDto> GetById([FromRoute] Guid id)
     {
         var order = DataStorage.Orders.FirstOrDefault(o => o.Id == id);
