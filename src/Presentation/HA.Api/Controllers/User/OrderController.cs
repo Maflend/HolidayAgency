@@ -1,13 +1,12 @@
 ﻿using HA.Api.Dtos;
-using HA.Api.Routes;
-using HA.Domain.Enums;
+using HA.Domain.Common;
 using HA.Domain.Models;
+using HA.Domain.Models.Orders;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace HA.Api.Controllers.User;
 
-[Route(UserRoute.OrderRoute.Base)]
+[Route("api/orders")]
 [ApiController]
 public class OrderController : ControllerBase
 {
@@ -16,63 +15,65 @@ public class OrderController : ControllerBase
 
     }
 
-    [HttpGet]
-    public ActionResult<List<GetOrderDto>> GetAll()
-    {
-        return Ok(DataStorage.Orders.Select(order => new GetOrderDto()
-        {
-            Id = order.Id,
-            EventDate = order.EventDate,
-            State = order.State,
-            CountHourse = order.CountHours,
-            Address = order.Address,
-            Category = new OrderCategoryDto()
-            {
-                Id = order.Category.Id,
-                Name = order.Category.Name
-            },
-            Client = new OrderClientDto()
-            {
-                Id = order.ClientId,
-                FullName = order.Client.FullName,
-                Phone = order.Client.Phone
-            }
-        }));
-    }
+    // Потребуется апи для отображения завершенных заказов на странице для пользователей (не для админа, у админа будет отображаться конфиденциальная информация)
 
-    [HttpGet(UserRoute.OrderRoute.GetById)]
-    public ActionResult<GetOrderDto> GetById([FromRoute] Guid id)
-    {
-        var order = DataStorage.Orders.FirstOrDefault(o => o.Id == id);
+    //[HttpGet]
+    //public ActionResult<List<GetNewOrderDto>> GetAll()
+    //{
+    //    return Ok(DataStorage.Orders.Select(order => new GetNewOrderDto()
+    //    {
+    //        Id = order.Id,
+    //        EventDate = order.EventDate,
+    //        CountHourse = order.CountHours,
+    //        Address = order.Address,
+    //        Category = new OrderCategoryDto()
+    //        {
+    //            Id = order.Category.Id,
+    //            Name = order.Category.Name
+    //        },
+    //        Client = new OrderClientDto()
+    //        {
+    //            Id = order.ClientId,
+    //            FullName = order.Client.FullName,
+    //            Phone = order.Client.Phone
+    //        }
+    //    }));
+    //}
 
-        if (order is null)
-        {
-            return NotFound("Заказ не найден");
-        }
+    //Пользователь может зайти на сайт, и если захочет посмотреть свои заказы то он вводить номер телефона/почту и после этого отображаются его заказы.
+    //Видимо будет добавлена аутентификация. А еще пизже будет внедрить аутентификацию через ВК, гугл, маил
 
+    //[HttpGet("new/{id}")]
+    //public ActionResult<GetNewOrderDto> GetById([FromRoute] Guid id)
+    //{
+    //    var order = DataStorage.NewOrders.FirstOrDefault(o => o.Id == id);
 
-        var getOrderDto = new GetOrderDto()
-        {
-            Id = id,
-            EventDate = order.EventDate,
-            State = order.State,
-            CountHourse = order.CountHours,
-            Address = order.Address,
-            Category = new OrderCategoryDto()
-            {
-                Id = order.CategoryId,
-                Name = order.Category.Name
-            },
-            Client = new OrderClientDto()
-            {
-                Id = order.ClientId,
-                FullName = order.Client.FullName,
-                Phone = order.Client.Phone
-            }
-        };
+    //    if (order is null)
+    //    {
+    //        return NotFound("Заказ не найден");
+    //    }
 
-        return Ok(getOrderDto);
-    }
+    //    var getOrderDto = new GetNewOrderDto()
+    //    {
+    //        Id = id,
+    //        EventDate = order.EventDate,
+    //        CountHourse = order.CountHours,
+    //        Address = order.Address,
+    //        Category = new OrderCategoryDto()
+    //        {
+    //            Id = order.CategoryId,
+    //            Name = order.Category.Name
+    //        },
+    //        Client = new OrderClientDto()
+    //        {
+    //            Id = order.ClientId,
+    //            FullName = order.Client.FullName,
+    //            Phone = order.Client.Phone
+    //        }
+    //    };
+
+    //    return Ok(getOrderDto);
+    //}
 
     [HttpPost]
     public IActionResult CreateOrderAsync(CreateOrderDto createOrderDto)
@@ -90,17 +91,16 @@ public class OrderController : ControllerBase
         {
             client = new Client()
             {
-                FullName = createOrderDto.FullName,
+                FullName = new FullName(createOrderDto.FirstName, createOrderDto.LastName, createOrderDto.Patronymic),
                 Phone = createOrderDto.Phone,
                 Id = Guid.NewGuid()
             };
         }
 
-        var order = new Order()
+        var order = new NewOrder()
         {
             Id = Guid.NewGuid(),
             EventDate = createOrderDto.EventDate,
-            State = OrderState.New,
             Address = createOrderDto.Address,
             CountHours = createOrderDto.CountHourse,
             ClientId = client.Id,
@@ -109,30 +109,32 @@ public class OrderController : ControllerBase
             Category = category,
         };
 
-        DataStorage.Orders.Add(order);
+        DataStorage.NewOrders.Add(order);
 
         return Ok();
     }
 
-    [HttpPut("{id}/state")]
-    public IActionResult ChangeState([FromRoute] Guid id, ChangeOrderStateDto changeOrderStateDto)
-    {
-        var order = DataStorage.Orders.FirstOrDefault(o => o.Id == id);
+    //Так как состояние теперь у заказа нет, то этот апи не нужен. Но пусть лежит и глаз мазолит.
 
-        if (order is null)
-        {
-            return NotFound("Заказ не найден");
-        }
+    //[HttpPut("{id}/state")]
+    //public IActionResult ChangeState([FromRoute] Guid id, ChangeOrderStateDto changeOrderStateDto)
+    //{
+    //    var order = DataStorage.Orders.FirstOrDefault(o => o.Id == id);
 
-        //TODO: State machine.
+    //    if (order is null)
+    //    {
+    //        return NotFound("Заказ не найден");
+    //    }
 
-        order.State = (order.State, changeOrderStateDto.State) switch
-        {
-            (OrderState.New, OrderState.Confirmed) => order.State = changeOrderStateDto.State,
-            (OrderState.Confirmed, OrderState.Completed) => order.State = changeOrderStateDto.State,
-            _ => throw new Exception("Invalid")
-        };
+    //    //TODO: State machine.
 
-        return Ok();
-    }
+    //    order.State = (order.State, changeOrderStateDto.State) switch
+    //    {
+    //        (OrderState.New, OrderState.Confirmed) => order.State = changeOrderStateDto.State,
+    //        (OrderState.Confirmed, OrderState.Completed) => order.State = changeOrderStateDto.State,
+    //        _ => throw new Exception("Invalid")
+    //    };
+
+    //    return Ok();
+    //}
 }

@@ -1,10 +1,9 @@
 ﻿using HA.Api.Dtos;
-using HA.Api.Routes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HA.Api.Controllers.User;
 
-[Route(UserRoute.ClientRoute.Base)]
+[Route("api/clients/")]
 [ApiController]
 public class ClientController : ControllerBase
 {
@@ -26,7 +25,7 @@ public class ClientController : ControllerBase
             .ToList();
     }
 
-    [HttpGet(UserRoute.ClientRoute.GetById)]
+    [HttpGet("{id}")]
     public ActionResult<GetClientDto> GetClient([FromRoute] Guid id)
     {
         var client = DataStorage.Clients.FirstOrDefault(c => c.Id == id);
