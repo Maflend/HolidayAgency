@@ -1,4 +1,4 @@
-﻿using HA.Domain.Common;
+﻿using HA.Domain.ValueObjects;
 
 namespace HA.Api.Dtos;
 

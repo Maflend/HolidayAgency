@@ -89,25 +89,19 @@ public class OrderController : ControllerBase
 
         if (client is null)
         {
-            client = new Client()
-            {
-                FullName = new FullName(createOrderDto.FirstName, createOrderDto.LastName, createOrderDto.Patronymic),
-                Phone = createOrderDto.Phone,
-                Id = Guid.NewGuid()
-            };
+            client = new Client(new FullName(createOrderDto.FirstName, createOrderDto.LastName, createOrderDto.Patronymic), createOrderDto.Phone);
         }
 
-        var order = new NewOrder()
-        {
-            Id = Guid.NewGuid(),
-            EventDate = createOrderDto.EventDate,
-            Address = createOrderDto.Address,
-            CountHours = createOrderDto.CountHourse,
-            ClientId = client.Id,
-            Client = client,
-            CategoryId = createOrderDto.CategoryId,
-            Category = category,
-        };
+        var priceList = new PriceList();
+
+        var order = new NewOrder(
+            category,
+            priceList,
+            client,
+            createOrderDto.EventDate,
+            createOrderDto.Address,
+            createOrderDto.CountHourse,
+            createOrderDto.CountPeople);
 
         DataStorage.NewOrders.Add(order);
 

@@ -1,4 +1,4 @@
-﻿namespace HA.Domain.Models;
+﻿namespace HA.Domain.Entities;
 
 public class PriceList
 {

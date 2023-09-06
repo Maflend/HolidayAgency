@@ -1,6 +1,6 @@
-﻿using HA.Domain.Models.Orders;
+﻿using HA.Domain.Entities.Orders;
 
-namespace HA.Domain.Models;
+namespace HA.Domain.Entities;
 public class EventFile
 {
     public Guid Id { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace HA.Domain.Common;
+﻿namespace HA.Domain.ValueObjects;
 
 public record FullName(FullNamePart FirstName, FullNamePart LastName, FullNamePart? Patronymic);
 
@@ -8,7 +8,7 @@ public class FullNamePart
 
     public FullNamePart()
     {
-        
+
     }
 
     public FullNamePart(string value)

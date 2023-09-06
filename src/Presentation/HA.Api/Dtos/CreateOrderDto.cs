@@ -1,4 +1,4 @@
-﻿using HA.Domain.Common;
+﻿using HA.Domain.ValueObjects;
 
 namespace HA.Api.Dtos;
 
@@ -11,14 +11,10 @@ public class CreateOrderDto
     public DateTime EventDate { get; set; }
     public double CountHourse { get; set; }
     public string Address { get; set; }
+    public int CountPeople { get; set; }
 
     public Guid CategoryId { get; set; }
 }
-
-//public class ChangeOrderStateDto
-//{
-//    public OrderState State { get; set; }
-//}
 
 public class GetNewOrderDto
 {
