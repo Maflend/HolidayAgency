@@ -1,3 +1,5 @@
+using HA.Api.Endpoints;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -16,6 +18,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapOrderEndpoints();
 
 app.Run();
