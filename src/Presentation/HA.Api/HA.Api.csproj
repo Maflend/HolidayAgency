@@ -7,19 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\Admin\**" />
-    <Content Remove="Controllers\Admin\**" />
-    <EmbeddedResource Remove="Controllers\Admin\**" />
-    <None Remove="Controllers\Admin\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Application\HA.Application\HA.Application.csproj" />
     <ProjectReference Include="..\..\Core\Domain\HA.Domain\HA.Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\HA.Infrastructure.EF\HA.Infrastructure.EF.csproj" />
   </ItemGroup>
 
 </Project>
