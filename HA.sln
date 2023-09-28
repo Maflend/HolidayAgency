@@ -19,9 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HA.Api", "src\Presentation\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HA.Domain", "src\Core\Domain\HA.Domain\HA.Domain.csproj", "{8FC3AFEA-1E6F-4E9F-831D-13D9E6ACF8D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HA.Application", "src\Core\Application\HA.Application\HA.Application.csproj", "{A5E3E7C3-A3B7-4727-8F47-8F3A6DFFE339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HA.Application", "src\Core\Application\HA.Application\HA.Application.csproj", "{A5E3E7C3-A3B7-4727-8F47-8F3A6DFFE339}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HA.Infrastructure.EF", "src\Infrastructure\HA.Infrastructure.EF\HA.Infrastructure.EF.csproj", "{7C56365D-0AC1-4B71-88F6-B77174CBA479}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HA.Infrastructure.EF", "src\Infrastructure\HA.Infrastructure.EF\HA.Infrastructure.EF.csproj", "{7C56365D-0AC1-4B71-88F6-B77174CBA479}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{05DF303A-AC26-4A82-9A4A-24307DEA0521}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{7C56365D-0AC1-4B71-88F6-B77174CBA479}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C56365D-0AC1-4B71-88F6-B77174CBA479}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C56365D-0AC1-4B71-88F6-B77174CBA479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05DF303A-AC26-4A82-9A4A-24307DEA0521}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05DF303A-AC26-4A82-9A4A-24307DEA0521}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05DF303A-AC26-4A82-9A4A-24307DEA0521}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05DF303A-AC26-4A82-9A4A-24307DEA0521}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
