@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  ha.api:
+    container_name: ha.api
+    image: ${DOCKER_REGISTRY-}haapi
+    build:
+      context: .
+      dockerfile: src/Presentation/HA.Api/Dockerfile
+    environment:
+        - ConnectionStrings__Postgres=Host=ha.postgres;Port=5432;Database=HolidayAgency;UserName=postgres;Password=thebestpassword123
+    depends_on:
+        - postgres
+
+  postgres:
+    container_name: ha.postgres
+    image: postgres
+    environment:
+        POSTGRES_DB: HolidayAgency
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: thebestpassword123
+    ports:
+        - "5451:5432"
+    volumes:
+        - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
