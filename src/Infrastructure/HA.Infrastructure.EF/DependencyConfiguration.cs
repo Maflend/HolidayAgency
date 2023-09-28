@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using HA.Application.Common.Persistence;
 
 namespace HA.Infrastructure.EF;
 public static class DependencyConfiguration
@@ -12,6 +13,8 @@ public static class DependencyConfiguration
         {
             options.UseNpgsql(configuration.GetConnectionString("Postgres"));
         });
+
+        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
         return services;
     }

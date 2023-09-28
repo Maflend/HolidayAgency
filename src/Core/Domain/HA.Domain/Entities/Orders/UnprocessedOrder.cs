@@ -1,10 +1,11 @@
 ﻿namespace HA.Domain.Entities.Orders;
 
-public class NewOrder : BaseOrder
+public class UnprocessedOrder : BaseOrder
 {
-    public NewOrder(
+    private UnprocessedOrder() { }
+
+    public UnprocessedOrder(
         Category category,
-        PriceList priceList,
         Client client,
         DateTime eventDate,
         string address,
@@ -12,7 +13,6 @@ public class NewOrder : BaseOrder
         int countPeople)
     {
         Category = category;
-        PriceList = priceList;
         Client = client;
         EventDate = eventDate;
         Address = address;

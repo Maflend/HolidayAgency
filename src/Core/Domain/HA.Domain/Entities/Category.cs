@@ -1,13 +1,17 @@
-﻿namespace HA.Domain.Entities;
+﻿using HA.Domain.Common;
 
-public class Category
+namespace HA.Domain.Entities;
+
+public class Category : Entity
 {
-    protected Category() { }
-    public Category(string name)
+    private Category() { }
+
+    public Category(string name, decimal priceOfHourse)
     {
         Name = name;
+        PriceOfHourse = priceOfHourse;
     }
 
-    public Guid Id { get; set; }
     public string Name { get; protected set; }
+    public decimal PriceOfHourse { get; protected set; }
 }

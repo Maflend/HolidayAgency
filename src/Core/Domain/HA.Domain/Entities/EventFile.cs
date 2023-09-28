@@ -1,13 +1,11 @@
-﻿using HA.Domain.Entities.Orders;
+﻿using HA.Domain.Common;
 
 namespace HA.Domain.Entities;
-public class EventFile
+public class EventFile : Entity
 {
-    public Guid Id { get; set; }
     public Guid Name { get; set; } = Guid.NewGuid();
     public required string OriginalName { get; set; }
     public required string Path { get; set; }
 
-    public Guid CompleteOrderId { get; set; }
-    public CompleteOrder CompleteOrder { get; set; }
+    public Guid CompletedOrderId { get; set; }
 }

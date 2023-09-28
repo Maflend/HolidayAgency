@@ -1,17 +1,21 @@
-﻿using HA.Domain.ValueObjects;
+﻿using HA.Domain.Common;
 
 namespace HA.Domain.Entities;
 
-public class Client
+public class Client : Entity
 {
-    protected Client() { }
-    public Client(FullName fullName, string phone)
+    private Client() { }
+
+    public Client(string name, string surname, string phone, string? patronymic = null)
     {
-        FullName = fullName;
+        Name = name;
+        Surname = surname;
+        Patronymic = patronymic;
         Phone = phone;
     }
 
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public FullName FullName { get; protected set; }
+    public string Name { get; protected set; }
+    public string Surname { get; protected set; }
+    public string? Patronymic { get; protected set; }
     public string Phone { get; protected set; }
 }

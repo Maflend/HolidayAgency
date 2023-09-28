@@ -1,10 +1,14 @@
-﻿using MediatR;
+﻿using HA.Application.Common.Persistence;
+using HA.Domain.Entities;
+using HA.Domain.Entities.Orders;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace HA.Application.Orders.CreateOrder;
 public record CreateOrderCommand(
     string FirstName,
     string LastName,
-    string Patronymic,
+    string? Patronymic,
     string Phone,
     DateTime EventDate,
     double CountHourse,
@@ -14,37 +18,36 @@ public record CreateOrderCommand(
 
 public class CreateOrderHandler : IRequestHandler<CreateOrderCommand>
 {
-    public CreateOrderHandler()
+    private readonly IApplicationDbContext _dbContext;
+
+    public CreateOrderHandler(IApplicationDbContext dbContext)
     {
-        
+        _dbContext = dbContext;
     }
 
     public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        //var category = DataStorage.Categories.FirstOrDefault(c => c.Id == createOrderDto.CategoryId);
+        var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == request.CategoryId, cancellationToken);
 
-        //if (category is null)
-        //{
-        //    return Results.NotFound("Категория не найдена");
-        //}
+        if (category is null)
+        {
+            //return Results.NotFound("Категория не найдена");
+        }
 
-        //var client = DataStorage.Clients.FirstOrDefault(c => c.Phone == createOrderDto.Phone);
+        var client = await _dbContext.Clients.FirstOrDefaultAsync(c => c.Phone == request.Phone, cancellationToken);
+        client ??= new Client(request.FirstName, request.LastName, request.Phone, request.Patronymic);
 
-        //client ??= new Client(new FullName(createOrderDto.FirstName, createOrderDto.LastName, createOrderDto.Patronymic), createOrderDto.Phone);
 
-        //var priceList = new PriceList();
+        var unprocessedOrder = new UnprocessedOrder(
+            category!,
+            client,
+            request.EventDate,
+            request.Address,
+            request.CountHourse,
+            request.CountPeople);
 
-        //var order = new NewOrder(
-        //    category,
-        //    priceList,
-        //    client,
-        //    createOrderDto.EventDate,
-        //    createOrderDto.Address,
-        //    createOrderDto.CountHourse,
-        //    createOrderDto.CountPeople);
+        await _dbContext.UnprocessedOrders.AddAsync(unprocessedOrder, cancellationToken);
 
-        //DataStorage.NewOrders.Add(order);
-
-        //return Results.Ok();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }
