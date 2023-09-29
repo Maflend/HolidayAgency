@@ -4,9 +4,12 @@ public class ValidationError : ErrorBase
 {
     public const string DefaultMessage = "Произошла одна или несколько ошибок проверки";
 
-    public ValidationError(string message) : base(message)
+    public ValidationError(string errorKey, string errorValue) : base(DefaultMessage)
     {
-
+        Errors = new Dictionary<string, string[]>()
+        {
+            { errorKey, new[] { errorValue } }
+        };
     }
 
     public ValidationError(Dictionary<string, string[]> errors) : base(DefaultMessage)

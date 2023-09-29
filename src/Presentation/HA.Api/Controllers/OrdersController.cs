@@ -17,7 +17,7 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPost]
-    public Task<ActionResult> Create(CreateOrderCommand createOrderCommand)
+    public Task<ActionResult> CreateAsync(CreateOrderCommand createOrderCommand)
     {
         return _sender.Send(createOrderCommand).ToActionResult();
     }
