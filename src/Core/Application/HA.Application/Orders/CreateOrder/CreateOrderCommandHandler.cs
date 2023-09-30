@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using HA.Application.Common.Models.Errors;
 using HA.Application.Common.Persistence;
 using HA.Domain.Entities;
 using HA.Domain.Entities.Orders;
@@ -19,17 +18,12 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
 
     public async Task<Result<Guid>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == request.CategoryId, cancellationToken);
-
-        if (category is null)
-        {
-            return Result.Fail(new NotFoundError("Категория не найдена"));
-        }
-
         var client = await _dbContext.Clients
             .FirstOrDefaultAsync(c => c.Phone == request.Phone, cancellationToken);
 
         client ??= new Client(request.FirstName, request.LastName, request.Phone, request.Patronymic);
+
+        var category = await _dbContext.Categories.SingleAsync(c => c.Id == request.CategoryId, cancellationToken);
 
         var unprocessedOrder = new UnprocessedOrder(
             category!,
