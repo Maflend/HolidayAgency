@@ -1,5 +1,8 @@
 ﻿namespace HA.Domain.Entities.Orders;
 
+/// <summary>
+/// Подтвержденный заказ.
+/// </summary>
 public class ConfirmedOrder : BaseOrder
 {
     private decimal _discountPerHour = 0;
@@ -20,9 +23,22 @@ public class ConfirmedOrder : BaseOrder
         Peoples = peoples;
     }
 
+    /// <summary>
+    /// План мероприятия.
+    /// </summary>
     public string EventPlan { get; protected set; }
+
+    /// <summary>
+    /// Люди. <br/> 
+    /// Key: Фио. <br/>
+    /// Value: кем является (друг, брат, коллега...).
+    /// </summary>
     public Dictionary<string, string> Peoples { get; protected set; }
-    public new int CountPeople => Peoples.Count;
+    public override int CountPeople => Peoples.Count;
+
+    /// <summary>
+    /// Скидка в час.
+    /// </summary>
     public decimal DiscountPerHour => _discountPerHour;
 
     public void MakeDiscount(decimal discountPerHour)

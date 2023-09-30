@@ -37,6 +37,9 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
+        //TODO: После создания заказа можно с помощью шины событий кидать событие создание заказа.
+        // Это событие будет обрабатывать сервис интеграции с ТГ который отправит уведомление сотруднику.
+
         return unprocessedOrder.Id;
     }
 }

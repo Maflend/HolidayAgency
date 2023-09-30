@@ -1,5 +1,8 @@
 ﻿namespace HA.Domain.Entities.Orders;
 
+/// <summary>
+/// Необработанный заказ.
+/// </summary>
 public class UnprocessedOrder : BaseOrder
 {
     private UnprocessedOrder() { }
