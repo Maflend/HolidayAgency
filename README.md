@@ -41,7 +41,7 @@
 Применение миграций: <br>
 1. В качестве запускаемого проекта выбрать HA.Api. <br>
 2. Открыть Package manager console. Выбрать проект HA.Infrastructure.EF. <br>
-3. Написать комманду <br>
+3. Написать команду <br>
   
 ```sh
 update-database
