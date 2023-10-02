@@ -26,10 +26,20 @@
 ### ![HowToUse](https://github.com/Maflend/HolidayAgency/assets/59286805/d2af0cd1-0dd2-416d-a8d4-9363a7441267)
 
 ## Запуск бэкенда:
-Запуск производится с помощью docker compose.
+Запуск производится с помощью docker compose. <br>
 Для запуска можно выбрать два варианта:
 - Docker Compose. Запуск всех контейнеров кроме pgadmin
 - Docker Compose With pgadmin. Запустит все контейнеры и pgadmin. Порт смотреть в docker-compose.yml
+
+После поднятия базы данных, необходимо применить миграции к базе данных. <br>
+Применение миграций:
+1. В качестве запускаемого проекта выбрать HA.Api.
+2. Открыть Package manager console. Выбрать проект HA.Infrastructure.EF.
+3. Написать комманду
+```sh
+update-database
+```
+4. Ждать применение миграций.
 
 <br>
 ✨ v1.0 ✨
