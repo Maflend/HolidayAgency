@@ -29,8 +29,8 @@
 <details><summary>Запуск docker compose</summary>
 <br>
 Запуск производится с помощью docker compose. <br>
-Для запуска можно выбрать два варианта:
-- Docker Compose. Запуск всех контейнеров кроме pgadmin
+Для запуска можно выбрать два варианта: <br>
+- Docker Compose. Запуск всех контейнеров кроме pgadmin <br>
 - Docker Compose With pgadmin. Запустит все контейнеры и pgadmin. Порт смотреть в docker-compose.yml
 <br>
 </details>
@@ -38,7 +38,7 @@
 <details><summary>Подготовка базы данных</summary>
 <br>
 После поднятия базы данных, необходимо применить миграции к базе данных. <br>
-Применение миграций:
+Применение миграций: <br>
 1. В качестве запускаемого проекта выбрать HA.Api. <br>
 2. Открыть Package manager console. Выбрать проект HA.Infrastructure.EF. <br>
 3. Написать комманду <br>
