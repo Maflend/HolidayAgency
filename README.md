@@ -27,13 +27,16 @@
 
 ## Запуск бэкенда:
 <details><summary>Запуск docker compose</summary>
+
 Запуск производится с помощью docker compose. <br>
 Для запуска можно выбрать два варианта:
 - Docker Compose. Запуск всех контейнеров кроме pgadmin
 - Docker Compose With pgadmin. Запустит все контейнеры и pgadmin. Порт смотреть в docker-compose.yml
+
 </details>
 
 <details><summary>Подготовка базы данных</summary>
+
 После поднятия базы данных, необходимо применить миграции к базе данных. <br>
 Применение миграций:
 1. В качестве запускаемого проекта выбрать HA.Api.
@@ -43,6 +46,7 @@
 update-database
 ```
 4. Ждать применение миграций.
+
 </details>
 
 <br>
