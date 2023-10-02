@@ -1,11 +1,49 @@
-﻿using MediatR;
+﻿using FluentResults;
+using HA.Application.Common.Persistence;
+using HA.Application.Orders.GetUnprocessedOrders.Response;
+using HA.Domain.Entities.Orders;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace HA.Application.Orders.GetUnprocessedOrders;
 
-public class GetUnprocessedOrdersQueryHandler : IRequestHandler<GetUnprocessedOrdersQuery, IList<GetOrderUnprocessedDto>>
+/// <summary>
+/// Обработчик запроса на получение необработанных заказов.
+/// </summary>
+public class GetUnprocessedOrdersQueryHandler : IRequestHandler<GetUnprocessedOrdersQuery, Result<List<GetOrderUnprocessedDto>>>
 {
-    public Task<IList<GetOrderUnprocessedDto>> Handle(GetUnprocessedOrdersQuery request, CancellationToken cancellationToken)
+    private readonly IApplicationDbContext _dbContext;
+
+    /// <inheritdoc cref="GetUnprocessedOrdersQueryHandler"/>
+    public GetUnprocessedOrdersQueryHandler(IApplicationDbContext dbContext)
     {
-        throw new NotImplementedException();
+        _dbContext = dbContext;
     }
+
+    public async Task<Result<List<GetOrderUnprocessedDto>>> Handle(GetUnprocessedOrdersQuery request, CancellationToken cancellationToken)
+    {
+        return await _dbContext.UnprocessedOrders
+            .Include(x => x.Category)
+            .Include(p => p.Client)
+            .Select(o => Map(o))
+            .ToListAsync(cancellationToken);
+    }
+
+    private static GetOrderUnprocessedDto Map(UnprocessedOrder order) => new()
+    {
+        Id = order.Id,
+        CategoryName = order.Category.Name,
+        EventDate = order.EventDate,
+        CountPeople = order.CountPeople,
+        CountHours = order.CountHours,
+        Address = order.Address,
+        Client = new()
+        {
+            Id = order.Client.Id,
+            Surname = order.Client.Surname,
+            Name = order.Client.Name,
+            Patronymic = order.Client.Patronymic,
+            Phone = order.Client.Phone
+        }
+    };
 }
