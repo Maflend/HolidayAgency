@@ -25,7 +25,7 @@
 
 ### ![HowToUse](https://github.com/Maflend/HolidayAgency/assets/59286805/d2af0cd1-0dd2-416d-a8d4-9363a7441267)
 
-## Запуск бэкенда:
+## 🚀 Запуск бэкенда:
 <details><summary>Запуск docker compose</summary>
 <br>
 Запуск производится с помощью docker compose. <br>
