@@ -25,7 +25,7 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Res
         .Select(o => Map(o))
         .ToListAsync(cancellationToken);
 
-    private GetCategoriesQueryDto Map(Category category) => new()
+    private static GetCategoriesQueryDto Map(Category category) => new()
     {
         Id = category.Id,
         Name = category.Name,
