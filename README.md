@@ -32,7 +32,7 @@
 Для запуска можно выбрать два варианта:
 - Docker Compose. Запуск всех контейнеров кроме pgadmin
 - Docker Compose With pgadmin. Запустит все контейнеры и pgadmin. Порт смотреть в docker-compose.yml
-
+<br>
 </details>
 
 <details><summary>Подготовка базы данных</summary>
@@ -46,7 +46,7 @@
 update-database
 ```
 4. Ждать применение миграций.
-
+<br>
 </details>
 
 <br>
