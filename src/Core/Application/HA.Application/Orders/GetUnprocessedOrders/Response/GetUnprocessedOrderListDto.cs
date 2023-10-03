@@ -3,7 +3,7 @@
 /// <summary>
 /// Информация о необработанном заказе.
 /// </summary>
-public class GetOrderUnprocessedDto
+public class GetUnprocessedOrderListDto
 {
     /// <summary>
     /// Идентификатор

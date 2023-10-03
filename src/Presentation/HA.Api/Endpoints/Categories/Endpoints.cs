@@ -1,4 +1,5 @@
 ﻿using HA.Api.Endpoints.Categories.CreateCategory;
+using HA.Api.Endpoints.Categories.GetCategories;
 
 namespace HA.Api.Endpoints.Categories;
 
@@ -14,6 +15,7 @@ public static class Endpoints
     {
         var group = app.MapGroup(EndpointConsts.BaseUrl + "categories").WithTags("Конечные точки категорий.");
 
+        group.MapGetCategoriesEndpoint();
         group.MapCreateCategoryEndpoint();
 
         return app;

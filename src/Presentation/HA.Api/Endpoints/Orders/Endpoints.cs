@@ -1,5 +1,6 @@
 ﻿using HA.Api.Endpoints.Orders.ConfirmOrder;
 using HA.Api.Endpoints.Orders.CreateOrder;
+using HA.Api.Endpoints.Orders.GetUnprocessedOrders;
 
 namespace HA.Api.Endpoints.Orders;
 
@@ -15,6 +16,7 @@ public static class Endpoints
     {
         var group = app.MapGroup(EndpointConsts.BaseUrl + "orders").WithTags("Конечные точки заказов.");
 
+        group.MapGetUnprocessedOrdersEndpoint();
         group.MapCreateOrderEndpoint();
         group.MapConfirmOrderEndpoint();
 
