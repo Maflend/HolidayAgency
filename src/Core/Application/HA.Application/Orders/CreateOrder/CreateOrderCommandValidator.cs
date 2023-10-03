@@ -3,11 +3,11 @@ using HA.Application.Common.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace HA.Application.Orders.CreateOrder;
-public class CreateOrderValidator : AbstractValidator<CreateOrderCommand>
+public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 {
     private readonly IApplicationDbContext _applicationDbContext;
 
-    public CreateOrderValidator(IApplicationDbContext applicationDbContext)
+    public CreateOrderCommandValidator(IApplicationDbContext applicationDbContext)
     {
         RuleFor(order => order.FirstName).NotEmpty().WithMessage("Имя должно быть указано");
         RuleFor(order => order.LastName).NotEmpty().WithMessage("Фамилия должна быть указано");

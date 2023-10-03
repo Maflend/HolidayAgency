@@ -12,12 +12,14 @@ public class ConfirmedOrder : BaseOrder
     public ConfirmedOrder(
         UnprocessedOrder unprocessedOrder,
         string eventPlan,
-        Dictionary<string, string> peoples)
+        Dictionary<string, string> peoples,
+        decimal DiscountPerHour)
     {
         Category = unprocessedOrder.Category;
         Client = unprocessedOrder.Client;
         Address = unprocessedOrder.Address;
         CountHours = unprocessedOrder.CountHours;
+        _discountPerHour = DiscountPerHour;
 
         EventPlan = eventPlan;
         Peoples = peoples;

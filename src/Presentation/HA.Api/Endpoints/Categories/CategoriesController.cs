@@ -3,7 +3,7 @@ using HA.Application.Categories.CreateCategory;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HA.Api.Controllers;
+namespace HA.Api.Endpoints.Categories;
 
 [ApiController]
 [Route("api/[controller]")]
