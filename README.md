@@ -23,6 +23,12 @@
 
 <br>
 
+## 🏬 Architecture
+Архитектура построена по мотивам CleanArchitecture и VerticalSlises.
+Архитектура конечных точек реализована с помощью Minimal api.
+
+<br>
+
 ### ![HowToUse](https://github.com/Maflend/HolidayAgency/assets/59286805/d2af0cd1-0dd2-416d-a8d4-9363a7441267)
 
 ## 🚀 Запуск бэкенда:
