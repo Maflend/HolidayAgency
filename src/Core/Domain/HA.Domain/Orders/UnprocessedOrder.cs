@@ -1,4 +1,7 @@
-﻿namespace HA.Domain.Entities.Orders;
+﻿using HA.Domain.Categories;
+using HA.Domain.Clients;
+
+namespace HA.Domain.Orders;
 
 /// <summary>
 /// Необработанный заказ.

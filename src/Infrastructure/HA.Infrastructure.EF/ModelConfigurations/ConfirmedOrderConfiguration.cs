@@ -1,4 +1,4 @@
-﻿using HA.Domain.Entities.Orders;
+﻿using HA.Domain.Orders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

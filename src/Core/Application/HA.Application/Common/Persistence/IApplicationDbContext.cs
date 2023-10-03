@@ -1,5 +1,7 @@
-﻿using HA.Domain.Entities;
-using HA.Domain.Entities.Orders;
+﻿using HA.Domain.Categories;
+using HA.Domain.Clients;
+using HA.Domain.Files;
+using HA.Domain.Orders;
 using Microsoft.EntityFrameworkCore;
 
 namespace HA.Application.Common.Persistence;

@@ -1,4 +1,4 @@
-﻿namespace HA.Domain.Entities.Orders;
+﻿namespace HA.Domain.Orders;
 
 /// <summary>
 /// Подтвержденный заказ.

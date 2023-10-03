@@ -1,13 +1,13 @@
 ﻿using FluentResults;
 using HA.Application.Common.Models.Errors;
 using HA.Application.Common.Persistence;
-using HA.Domain.Entities;
+using HA.Domain.Categories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace HA.Application.Categories.CreateCategory;
 
-internal class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, Result<Guid>>
+public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, Result<Guid>>
 {
     private readonly IApplicationDbContext _applicationDbContext;
 

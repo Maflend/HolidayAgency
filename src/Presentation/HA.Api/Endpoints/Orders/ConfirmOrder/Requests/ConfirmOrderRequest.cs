@@ -1,4 +1,4 @@
-﻿namespace HA.Api.Endpoints.Orders.Dtos.Requests;
+﻿namespace HA.Api.Endpoints.Orders.ConfirmOrder.Requests;
 
 /// <summary>
 /// Информация для подтверждения заказа.

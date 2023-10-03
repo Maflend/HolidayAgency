@@ -1,4 +1,6 @@
-﻿namespace HA.Domain.Entities.Orders;
+﻿using HA.Domain.Files;
+
+namespace HA.Domain.Orders;
 
 /// <summary>
 /// Выполненный заказ.
@@ -15,7 +17,7 @@ public class CompletedOrder : BaseOrder
         Address = confirmedOrder.Address;
         CountHours = confirmedOrder.CountHours;
         Peoples = confirmedOrder.Peoples;
-        EventPlan = confirmedOrder.EventPlan; 
+        EventPlan = confirmedOrder.EventPlan;
     }
 
     /// <summary>

@@ -1,6 +1,8 @@
-﻿using HA.Domain.Common;
+﻿using HA.Domain.Categories;
+using HA.Domain.Clients;
+using HA.Domain.Common;
 
-namespace HA.Domain.Entities.Orders;
+namespace HA.Domain.Orders;
 
 /// <summary>
 /// Заказ.

@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using HA.Application.Common.Persistence;
-using HA.Domain.Entities.Orders;
-using HA.Domain.Entities;
 using System.Reflection;
+using HA.Domain.Orders;
+using HA.Domain.Clients;
+using HA.Domain.Categories;
+using HA.Domain.Files;
 
 namespace HA.Infrastructure.EF.Contexts;
 public class ApplicationDbContext : DbContext, IApplicationDbContext

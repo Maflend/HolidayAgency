@@ -1,6 +1,6 @@
 ﻿using HA.Domain.Common;
 
-namespace HA.Domain.Entities;
+namespace HA.Domain.Files;
 
 /// <summary>
 /// Файл мероприятия.
