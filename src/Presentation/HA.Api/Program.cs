@@ -1,5 +1,6 @@
 using FluentResults.Extensions.AspNetCore;
 using HA.Api.ErrorHandlers;
+using HA.Api.Startup;
 using HA.Application;
 using HA.Infrastructure.EF;
 
@@ -26,6 +27,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints();
 
 app.Run();

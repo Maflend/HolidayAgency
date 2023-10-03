@@ -22,8 +22,10 @@ public class ValidationPiplineBehavior<TRequest, TResponse> : IPipelineBehavior<
             return await next();
         }
 
-        var errorsDictionary = _validators
-            .Select(v => v.Validate(request))
+        var validationResults = await Task.WhenAll(
+            _validators.Select(v => v.ValidateAsync(request)));
+
+        var errorsDictionary = validationResults
             .SelectMany(result => result.Errors)
             .Where(error => error != null)
             .GroupBy(

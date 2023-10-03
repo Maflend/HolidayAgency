@@ -1,6 +1,6 @@
 ﻿using FluentResults;
 using HA.Application.Common.Persistence;
-using HA.Domain.Entities;
+using HA.Domain.Categories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +9,7 @@ namespace HA.Application.Categories.GetCategories;
 /// <summary>
 /// Обработчик запроса на получение категорий.
 /// </summary>
-public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Result<List<GetCategoriesQueryDto>>>
+public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Result<List<GetCategoryListDto>>>
 {
     private readonly IApplicationDbContext _dbcontext;
 
@@ -18,14 +18,14 @@ public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Res
         _dbcontext = dbContext;
     }
     
-    public async Task<Result<List<GetCategoriesQueryDto>>> Handle(
+    public async Task<Result<List<GetCategoryListDto>>> Handle(
         GetCategoriesQuery request,
         CancellationToken cancellationToken) =>
         await _dbcontext.Categories
         .Select(o => Map(o))
         .ToListAsync(cancellationToken);
 
-    private static GetCategoriesQueryDto Map(Category category) => new()
+    private static GetCategoryListDto Map(Category category) => new()
     {
         Id = category.Id,
         Name = category.Name,

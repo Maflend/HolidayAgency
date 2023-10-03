@@ -1,9 +1,13 @@
 ﻿using FluentValidation;
+using HA.Application.Common.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace HA.Application.Orders.CreateOrder;
-public class CreateOrderValidator : AbstractValidator<CreateOrderCommand>
+public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 {
-    public CreateOrderValidator()
+    private readonly IApplicationDbContext _applicationDbContext;
+
+    public CreateOrderCommandValidator(IApplicationDbContext applicationDbContext)
     {
         RuleFor(order => order.FirstName).NotEmpty().WithMessage("Имя должно быть указано");
         RuleFor(order => order.LastName).NotEmpty().WithMessage("Фамилия должна быть указано");
@@ -19,5 +23,15 @@ public class CreateOrderValidator : AbstractValidator<CreateOrderCommand>
 
         RuleFor(order => order.EventDate)
             .ExclusiveBetween(DateTime.UtcNow, DateTime.UtcNow.AddYears(2)).WithMessage("Некорректная дата мероприятия");
+        _applicationDbContext = applicationDbContext;
+
+        RuleFor(order => order.CategoryId).MustAsync(CheckCategoryExistAsync).WithMessage("Категория не найдена");
+    }
+
+    private async Task<bool> CheckCategoryExistAsync(Guid categoryId, CancellationToken cancellationToken = default)
+    {
+        var category = await _applicationDbContext.Categories.FirstOrDefaultAsync(c => c.Id == categoryId, cancellationToken);
+
+        return category is not null;
     }
 }

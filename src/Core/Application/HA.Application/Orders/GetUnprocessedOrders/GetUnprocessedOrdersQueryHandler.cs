@@ -1,7 +1,7 @@
 ﻿using FluentResults;
 using HA.Application.Common.Persistence;
 using HA.Application.Orders.GetUnprocessedOrders.Response;
-using HA.Domain.Entities.Orders;
+using HA.Domain.Orders;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +10,7 @@ namespace HA.Application.Orders.GetUnprocessedOrders;
 /// <summary>
 /// Обработчик запроса на получение необработанных заказов.
 /// </summary>
-public class GetUnprocessedOrdersQueryHandler : IRequestHandler<GetUnprocessedOrdersQuery, Result<List<GetOrderUnprocessedDto>>>
+public class GetUnprocessedOrdersQueryHandler : IRequestHandler<GetUnprocessedOrdersQuery, Result<List<GetUnprocessedOrderListDto>>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -20,7 +20,7 @@ public class GetUnprocessedOrdersQueryHandler : IRequestHandler<GetUnprocessedOr
         _dbContext = dbContext;
     }
 
-    public async Task<Result<List<GetOrderUnprocessedDto>>> Handle(GetUnprocessedOrdersQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<GetUnprocessedOrderListDto>>> Handle(GetUnprocessedOrdersQuery request, CancellationToken cancellationToken)
     {
         return await _dbContext.UnprocessedOrders
             .Include(x => x.Category)
@@ -29,7 +29,7 @@ public class GetUnprocessedOrdersQueryHandler : IRequestHandler<GetUnprocessedOr
             .ToListAsync(cancellationToken);
     }
 
-    private static GetOrderUnprocessedDto Map(UnprocessedOrder order) => new()
+    private static GetUnprocessedOrderListDto Map(UnprocessedOrder order) => new()
     {
         Id = order.Id,
         CategoryName = order.Category.Name,

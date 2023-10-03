@@ -1,4 +1,4 @@
-﻿using HA.Domain.Entities;
+﻿using HA.Domain.Categories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -3,7 +3,7 @@
 /// <summary>
 /// Информация о категории.
 /// </summary>
-public class GetCategoriesQueryDto
+public class GetCategoryListDto
 {
     /// <summary>
     /// Идентификатор.
