@@ -5,6 +5,6 @@ using MediatR;
 namespace HA.Application.Orders.GetUnprocessedOrderById;
 
 /// <summary>
-/// Запрос на получение необработанных заказов по идентификатору.
+/// Запрос на получение необработанного заказа по идентификатору.
 /// </summary>
-public record GetUnprocessedOrderByIdQuery(Guid Id) : IRequest<Result<GetUnprocessedOrderByIdListDto>>;
+public record GetUnprocessedOrderByIdQuery(Guid Id) : IRequest<Result<GetUnprocessedOrderByIdDto>>;

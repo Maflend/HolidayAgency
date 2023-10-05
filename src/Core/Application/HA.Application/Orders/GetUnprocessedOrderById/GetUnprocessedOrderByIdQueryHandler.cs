@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 namespace HA.Application.Orders.GetUnprocessedOrderById;
 
 /// <summary>
-/// Обработчик запроса на получение необработанных заказов по идентификатору.
+/// Обработчик запроса на получение необработанного заказа по идентификатору.
 /// </summary>
-public class GetUnprocessedOrderByIdQueryHandler : IRequestHandler<GetUnprocessedOrderByIdQuery, Result<GetUnprocessedOrderByIdListDto>>
+public class GetUnprocessedOrderByIdQueryHandler : IRequestHandler<GetUnprocessedOrderByIdQuery, Result<GetUnprocessedOrderByIdDto>>
 {
     private IApplicationDbContext _dbcontext;
 
@@ -22,21 +22,22 @@ public class GetUnprocessedOrderByIdQueryHandler : IRequestHandler<GetUnprocesse
     }
 
 
-    public async Task<Result<GetUnprocessedOrderByIdListDto>> Handle(GetUnprocessedOrderByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<GetUnprocessedOrderByIdDto>> Handle(GetUnprocessedOrderByIdQuery request, CancellationToken cancellationToken)
     {
-        if (!_dbcontext.UnprocessedOrders.Any(x => x.Id == request.Id))
+        var existingUnprocessedOrder = await _dbcontext.UnprocessedOrders
+            .Include(x => x.Client)
+            .Include(x => x.Category)
+            .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
+
+        if (existingUnprocessedOrder is null)
         {
             return Result.Fail(new NotFoundError("Необработанный заказ не существует."));
         }
 
-        return await _dbcontext.UnprocessedOrders
-            .Include(x => x.Client)
-            .Include(x => x.Category)
-            .Where(x => x.Id == request.Id)
-            .Select(x => Map(x))
-            .FirstAsync();
+        return Map(existingUnprocessedOrder);
     }
-    private static GetUnprocessedOrderByIdListDto Map(UnprocessedOrder order) => new()
+
+    private static GetUnprocessedOrderByIdDto Map(UnprocessedOrder order) => new()
     {
         Id = order.Id,
         CategoryName = order.Category.Name,

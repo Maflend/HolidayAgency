@@ -6,7 +6,7 @@
 public class GetUnprocessedOrderListDto
 {
     /// <summary>
-    /// Идентификатор
+    /// Идентификатор.
     /// </summary>
     public Guid Id { get; set; }
 

@@ -20,7 +20,7 @@ public static class Endpoints
         group.MapGetUnprocessedOrdersEndpoint();
         group.MapCreateOrderEndpoint();
         group.MapConfirmOrderEndpoint();
-        group.MapGetUnprocessedOrdersByIdEndpoint();
+        group.MapGetUnprocessedOrderByIdEndpoint();
 
         return app;
     }

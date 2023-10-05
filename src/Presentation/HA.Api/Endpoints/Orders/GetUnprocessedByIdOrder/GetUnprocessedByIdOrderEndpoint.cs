@@ -5,16 +5,17 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HA.Api.Endpoints.Orders.GetUnprocessedByIdOrders;
+
 public static class GetUnprocessedByIdOrderEndpoint
 {
-    public static void MapGetUnprocessedOrdersByIdEndpoint(this RouteGroupBuilder group)
+    public static void MapGetUnprocessedOrderByIdEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("{id}/unprocessed", GetUnprocessedOrderByIdAsync)
             .Produces(200, typeof(GetUnprocessedOrderListDto))
             .WithOpenApi(opts =>
             {
-                opts.Summary = "Получить необработанные заказы по идентификатору.";
-                opts.Description = "Получить необработанные по идентификатору.";
+                opts.Summary = "Получить необработанный заказ по идентификатору.";
+                opts.Description = "Получить необработанный по идентификатору.";
 
                 return opts;
             });

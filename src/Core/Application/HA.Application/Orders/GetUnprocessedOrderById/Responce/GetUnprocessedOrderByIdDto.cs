@@ -3,10 +3,10 @@
 /// <summary>
 /// Информация о необработанном заказе.
 /// </summary>
-public class GetUnprocessedOrderByIdListDto
+public class GetUnprocessedOrderByIdDto
 {
     /// <summary>
-    /// Идентификатор
+    /// Идентификатор.
     /// </summary>
     public Guid Id { get; set; }
 
