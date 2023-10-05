@@ -1,5 +1,6 @@
 ﻿using HA.Api.Endpoints.Categories.CreateCategory;
 using HA.Api.Endpoints.Categories.GetCategories;
+using HA.Api.Endpoints.Categories.GetCategoryById;
 
 namespace HA.Api.Endpoints.Categories;
 
@@ -17,7 +18,7 @@ public static class Endpoints
 
         group.MapGetCategoriesEndpoint();
         group.MapCreateCategoryEndpoint();
-
+        group.MapGetCategoryByIdEndpoint();
         return app;
     }
 }

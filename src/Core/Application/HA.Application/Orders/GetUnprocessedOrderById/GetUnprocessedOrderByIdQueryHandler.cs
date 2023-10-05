@@ -15,7 +15,7 @@ public class GetUnprocessedOrderByIdQueryHandler : IRequestHandler<GetUnprocesse
 {
     private IApplicationDbContext _dbcontext;
 
-    /// <inheritdoc cref="GetUnprocessedOrdersQueryHandler"/>
+    /// <inheritdoc cref="GetUnprocessedOrderByIdQueryHandler"/>
     public GetUnprocessedOrderByIdQueryHandler(IApplicationDbContext dbContext)
     {
         _dbcontext = dbContext;
