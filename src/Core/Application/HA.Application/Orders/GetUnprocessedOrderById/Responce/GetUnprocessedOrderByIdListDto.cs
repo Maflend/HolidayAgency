@@ -1,28 +1,43 @@
-﻿using HA.Domain.Categories;
-using HA.Domain.Clients;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace HA.Application.Orders.GetUnprocessedOrderById.Responce;
 
-namespace HA.Application.Orders.GetUnprocessedOrderById.Responce
+/// <summary>
+/// Информация о необработанном заказе.
+/// </summary>
+public class GetUnprocessedOrderByIdListDto
 {
-    public class GetUnprocessedOrderByIdListDto
-    {
+    /// <summary>
+    /// Идентификатор
+    /// </summary>
+    public Guid Id { get; set; }
 
-        public Guid Id { get; set; }
+    /// <summary>
+    /// Дата проведения.
+    /// </summary>
+    public DateTime EventDate { get; set; }
 
-        public DateTime EventDate { get; set; }
+    /// <summary>
+    /// Адрес проведения.
+    /// </summary>
+    public string Address { get; set; }
 
-        public string Address { get; set; }
+    /// <summary>
+    /// Количество часов.
+    /// </summary>
+    public double CountHours { get; set; }
 
-        public double CountHours { get; set; }
+    /// <summary>
+    /// Количество людей.
+    /// </summary>
+    public int CountPeople { get; set; }
 
-        public int CountPeople { get; set; }
+    /// <summary>
+    /// Категория.
+    /// </summary>
+    public string CategoryName { get; set; }
 
-        public string CategoryName { get; set; }
-
-        public ClientInfoDto Client { get; set; }
-    }
+    /// <summary>
+    /// Клиент.
+    /// </summary>
+    public ClientInfoDto Client { get; set; }
 }
+
