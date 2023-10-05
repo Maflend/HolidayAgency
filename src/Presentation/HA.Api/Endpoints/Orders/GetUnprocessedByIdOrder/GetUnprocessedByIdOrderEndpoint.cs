@@ -9,8 +9,8 @@ public static class GetUnprocessedByIdOrderEndpoint
 {
     public static void MapGetUnprocessedOrdersByIdEndpoint(this RouteGroupBuilder group)
     {
-        group.MapGet("{id}", GetUnprocessedOrdersAsync)
-            .Produces(200, typeof(List<GetUnprocessedOrderListDto>))
+        group.MapGet("{id}/unprocessed", GetUnprocessedOrderByIdAsync)
+            .Produces(200, typeof(GetUnprocessedOrderListDto))
             .WithOpenApi(opts =>
             {
                 opts.Summary = "Получить необработанные заказы по идентификатору.";
@@ -20,7 +20,8 @@ public static class GetUnprocessedByIdOrderEndpoint
             });
     }
 
-    internal static Task<ActionResult> GetUnprocessedOrdersAsync([FromRoute] Guid id,
+    internal static Task<ActionResult> GetUnprocessedOrderByIdAsync(
+        [FromRoute] Guid id,
         ISender sender)
     {
         return sender.Send(new GetUnprocessedOrderByIdQuery(id)).ToActionResult();
