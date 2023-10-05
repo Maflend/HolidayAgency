@@ -1,9 +1,9 @@
-﻿namespace HA.Application.Orders.GetUnprocessedOrders.Response;
+﻿namespace HA.Application.Orders.GetUnprocessedOrderById.Responce;
 
 /// <summary>
 /// Информация о необработанном заказе.
 /// </summary>
-public class GetUnprocessedOrderListDto
+public class GetUnprocessedOrderByIdDto
 {
     /// <summary>
     /// Идентификатор.
@@ -31,12 +31,13 @@ public class GetUnprocessedOrderListDto
     public int CountPeople { get; set; }
 
     /// <summary>
-    /// Клиент.
-    /// </summary>
-    public ClientInfoDto Client { get; set; }
-
-    /// <summary>
     /// Категория.
     /// </summary>
     public string CategoryName { get; set; }
+
+    /// <summary>
+    /// Клиент.
+    /// </summary>
+    public ClientInfoDto Client { get; set; }
 }
+

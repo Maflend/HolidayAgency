@@ -29,7 +29,7 @@ public static class CreateOrderEndpoint
                     {
                         Name = "createOrderCommand",
                         Description = "Информация для создания заказа.",
-                        Required = true
+                        
                     }
                 };
 
@@ -39,7 +39,7 @@ public static class CreateOrderEndpoint
 
     internal static Task<ActionResult> CreateAsync(
         ISender sender,
-        [FromBody] CreateOrderCommand createOrderCommand)
+        CreateOrderCommand createOrderCommand)
     {
         return sender.Send(createOrderCommand).ToActionResult();
     }
