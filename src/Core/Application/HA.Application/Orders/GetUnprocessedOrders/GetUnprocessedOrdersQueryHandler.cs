@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using HA.Application.Common.Persistence;
 using HA.Application.Orders.GetUnprocessedOrders.Response;
 using HA.Domain.Orders;
@@ -14,10 +15,12 @@ public class GetUnprocessedOrdersQueryHandler : IRequestHandler<GetUnprocessedOr
 {
     private readonly IApplicationDbContext _dbContext;
 
+    private readonly IMapper _mapper;
     /// <inheritdoc cref="GetUnprocessedOrdersQueryHandler"/>
-    public GetUnprocessedOrdersQueryHandler(IApplicationDbContext dbContext)
+    public GetUnprocessedOrdersQueryHandler(IApplicationDbContext dbContext,IMapper mapper)
     {
         _dbContext = dbContext;
+        _mapper = mapper;
     }
 
     public async Task<Result<List<GetUnprocessedOrderListDto>>> Handle(GetUnprocessedOrdersQuery request, CancellationToken cancellationToken)
@@ -25,25 +28,9 @@ public class GetUnprocessedOrdersQueryHandler : IRequestHandler<GetUnprocessedOr
         return await _dbContext.UnprocessedOrders
             .Include(x => x.Category)
             .Include(p => p.Client)
-            .Select(o => Map(o))
+            .Select(o => _mapper.Map<UnprocessedOrder,GetUnprocessedOrderListDto>(o))
             .ToListAsync(cancellationToken);
     }
 
-    private static GetUnprocessedOrderListDto Map(UnprocessedOrder order) => new()
-    {
-        Id = order.Id,
-        CategoryName = order.Category.Name,
-        EventDate = order.EventDate,
-        CountPeople = order.CountPeople,
-        CountHours = order.CountHours,
-        Address = order.Address,
-        Client = new()
-        {
-            Id = order.Client.Id,
-            Surname = order.Client.Surname,
-            Name = order.Client.Name,
-            Patronymic = order.Client.Patronymic,
-            Phone = order.Client.Phone
-        }
-    };
+    
 }
