@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using FluentResults;
 using HA.Application.Common.Models.Errors;
 using HA.Application.Common.Persistence;
 using HA.Domain.Categories;
@@ -13,16 +14,18 @@ namespace HA.Application.Categories.GetCategoryById;
 public class GetCategoryByIdQyeryHandler : IRequestHandler<GetCategoryByIdQuery, Result<GetCategoryDto>>
 {
     private IApplicationDbContext _dbcontext;
+    private IMapper _mapper;
 
     /// <inheritdoc cref="GetCategoryByIdQyeryHandler"/>
-    public GetCategoryByIdQyeryHandler(IApplicationDbContext dbContext)
+    public GetCategoryByIdQyeryHandler(IApplicationDbContext dbContext, IMapper mapper)
     {
         _dbcontext = dbContext;
+        _mapper = mapper;
     }
 
     public async Task<Result<GetCategoryDto>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
     {
-        var existingUnprocessedOrder = 
+        var existingUnprocessedOrder =
             await _dbcontext.Categories
             .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
@@ -31,13 +34,8 @@ public class GetCategoryByIdQyeryHandler : IRequestHandler<GetCategoryByIdQuery,
             return Result.Fail(new NotFoundError("Категория с данным идентификатором не существует."));
         }
 
-        return Map(existingUnprocessedOrder);
+        return _mapper.Map<Category, GetCategoryDto>(existingUnprocessedOrder);
     }
-    private static GetCategoryDto Map(Category category) => new()
-    {
-        Id = category.Id,
-        PriceOfHourse = category.PriceOfHourse,
-        Name = category.Name,
-    };
+
 }
 
