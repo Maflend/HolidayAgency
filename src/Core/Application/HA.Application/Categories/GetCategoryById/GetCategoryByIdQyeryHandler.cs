@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FluentResults;
 using HA.Application.Common.Models.Errors;
 using HA.Application.Common.Persistence;
@@ -26,7 +27,7 @@ public class GetCategoryByIdQyeryHandler : IRequestHandler<GetCategoryByIdQuery,
     public async Task<Result<GetCategoryDto>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
     {
         var existingUnprocessedOrder =
-            await _dbcontext.Categories
+            await _dbcontext.Categories.ProjectTo<GetCategoryDto>(_mapper.ConfigurationProvider)
             .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (existingUnprocessedOrder is null)
@@ -34,7 +35,7 @@ public class GetCategoryByIdQyeryHandler : IRequestHandler<GetCategoryByIdQuery,
             return Result.Fail(new NotFoundError("Категория с данным идентификатором не существует."));
         }
 
-        return _mapper.Map<Category, GetCategoryDto>(existingUnprocessedOrder);
+        return existingUnprocessedOrder;
     }
 
 }

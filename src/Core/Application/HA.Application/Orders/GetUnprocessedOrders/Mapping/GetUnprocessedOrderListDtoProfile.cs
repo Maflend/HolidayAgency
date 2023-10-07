@@ -13,9 +13,9 @@ public class GetUnprocessedOrderListDtoProfile : Profile
     /// <inheritdoc cref="GetUnprocessedOrderListDtoProfile"/>
     public GetUnprocessedOrderListDtoProfile()
     {
-        CreateMap<Client, ClientInfoDto>();
+        CreateProjection<Client, ClientInfoDto>();
 
-        CreateMap<UnprocessedOrder, GetUnprocessedOrderListDto>()
+        CreateProjection<UnprocessedOrder, GetUnprocessedOrderListDto>()
             .ForMember(item => item.CategoryName,
             opt => opt.MapFrom(item => item.Category.Name));
 

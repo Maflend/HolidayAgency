@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FluentResults;
 using HA.Application.Common.Models.Errors;
 using HA.Application.Common.Persistence;
@@ -15,7 +16,6 @@ namespace HA.Application.Orders.GetUnprocessedOrderById;
 public class GetUnprocessedOrderByIdQueryHandler : IRequestHandler<GetUnprocessedOrderByIdQuery, Result<GetUnprocessedOrderByIdDto>>
 {
     private IApplicationDbContext _dbcontext;
-
     private IMapper _mapper;
 
     /// <inheritdoc cref="GetUnprocessedOrdersQueryHandler"/>
@@ -29,8 +29,7 @@ public class GetUnprocessedOrderByIdQueryHandler : IRequestHandler<GetUnprocesse
     public async Task<Result<GetUnprocessedOrderByIdDto>> Handle(GetUnprocessedOrderByIdQuery request, CancellationToken cancellationToken)
     {
         var existingUnprocessedOrder = await _dbcontext.UnprocessedOrders
-            .Include(x => x.Client)
-            .Include(x => x.Category)
+            .ProjectTo<GetUnprocessedOrderByIdDto>(_mapper.ConfigurationProvider)
             .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
 
         if (existingUnprocessedOrder is null)
@@ -38,7 +37,7 @@ public class GetUnprocessedOrderByIdQueryHandler : IRequestHandler<GetUnprocesse
             return Result.Fail(new NotFoundError("Необработанный заказ не существует."));
         }
 
-        return _mapper.Map<UnprocessedOrder,GetUnprocessedOrderByIdDto>(existingUnprocessedOrder);
+        return existingUnprocessedOrder;
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FluentResults;
 using HA.Application.Common.Persistence;
 using HA.Application.Orders.GetUnprocessedOrders.Response;
@@ -14,8 +15,8 @@ namespace HA.Application.Orders.GetUnprocessedOrders;
 public class GetUnprocessedOrdersQueryHandler : IRequestHandler<GetUnprocessedOrdersQuery, Result<List<GetUnprocessedOrderListDto>>>
 {
     private readonly IApplicationDbContext _dbContext;
-
     private readonly IMapper _mapper;
+
     /// <inheritdoc cref="GetUnprocessedOrdersQueryHandler"/>
     public GetUnprocessedOrdersQueryHandler(IApplicationDbContext dbContext,IMapper mapper)
     {
@@ -26,9 +27,7 @@ public class GetUnprocessedOrdersQueryHandler : IRequestHandler<GetUnprocessedOr
     public async Task<Result<List<GetUnprocessedOrderListDto>>> Handle(GetUnprocessedOrdersQuery request, CancellationToken cancellationToken)
     {
         return await _dbContext.UnprocessedOrders
-            .Include(x => x.Category)
-            .Include(p => p.Client)
-            .Select(o => _mapper.Map<UnprocessedOrder,GetUnprocessedOrderListDto>(o))
+            .ProjectTo<GetUnprocessedOrderListDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
     }
 

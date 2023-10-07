@@ -11,7 +11,7 @@ public class GetCategoryDtoProfile : Profile
     /// <inheritdoc cref="GetCategoryDtoProfile"/>
     public GetCategoryDtoProfile()
     {
-        CreateMap<Category, GetCategoryDto>();
+        CreateProjection<Category, GetCategoryDto>();
     }
 }
 
