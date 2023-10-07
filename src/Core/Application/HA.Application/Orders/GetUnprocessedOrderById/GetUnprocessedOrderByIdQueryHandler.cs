@@ -1,4 +1,6 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using FluentResults;
 using HA.Application.Common.Models.Errors;
 using HA.Application.Common.Persistence;
 using HA.Application.Orders.GetUnprocessedOrderById.Responce;
@@ -14,19 +16,20 @@ namespace HA.Application.Orders.GetUnprocessedOrderById;
 public class GetUnprocessedOrderByIdQueryHandler : IRequestHandler<GetUnprocessedOrderByIdQuery, Result<GetUnprocessedOrderByIdDto>>
 {
     private IApplicationDbContext _dbcontext;
+    private IMapper _mapper;
 
-    /// <inheritdoc cref="GetUnprocessedOrderByIdQueryHandler"/>
-    public GetUnprocessedOrderByIdQueryHandler(IApplicationDbContext dbContext)
+    /// <inheritdoc cref="GetUnprocessedOrdersQueryHandler"/>
+    public GetUnprocessedOrderByIdQueryHandler(IApplicationDbContext dbContext,IMapper mapper)
     {
         _dbcontext = dbContext;
+        _mapper = mapper;
     }
 
 
     public async Task<Result<GetUnprocessedOrderByIdDto>> Handle(GetUnprocessedOrderByIdQuery request, CancellationToken cancellationToken)
     {
         var existingUnprocessedOrder = await _dbcontext.UnprocessedOrders
-            .Include(x => x.Client)
-            .Include(x => x.Category)
+            .ProjectTo<GetUnprocessedOrderByIdDto>(_mapper.ConfigurationProvider)
             .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
 
         if (existingUnprocessedOrder is null)
@@ -34,25 +37,7 @@ public class GetUnprocessedOrderByIdQueryHandler : IRequestHandler<GetUnprocesse
             return Result.Fail(new NotFoundError("Необработанный заказ не существует."));
         }
 
-        return Map(existingUnprocessedOrder);
+        return existingUnprocessedOrder;
     }
-
-    private static GetUnprocessedOrderByIdDto Map(UnprocessedOrder order) => new()
-    {
-        Id = order.Id,
-        CategoryName = order.Category.Name,
-        EventDate = order.EventDate,
-        CountPeople = order.CountPeople,
-        CountHours = order.CountHours,
-        Address = order.Address,
-        Client = new()
-        {
-            Id = order.Client.Id,
-            Surname = order.Client.Surname,
-            Name = order.Client.Name,
-            Patronymic = order.Client.Patronymic,
-            Phone = order.Client.Phone
-        }
-    };
 }
 

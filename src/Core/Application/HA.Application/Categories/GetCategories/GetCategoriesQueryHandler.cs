@@ -1,4 +1,6 @@
-﻿using FluentResults;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using FluentResults;
 using HA.Application.Common.Persistence;
 using HA.Domain.Categories;
 using MediatR;
@@ -12,24 +14,17 @@ namespace HA.Application.Categories.GetCategories;
 public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, Result<List<GetCategoryListDto>>>
 {
     private readonly IApplicationDbContext _dbcontext;
+    private readonly IMapper _mapper;
 
-    public GetCategoriesQueryHandler(IApplicationDbContext dbContext)
+    public GetCategoriesQueryHandler(IApplicationDbContext dbContext,IMapper mapper)
     {
         _dbcontext = dbContext;
+        _mapper = mapper;
     }
     
     public async Task<Result<List<GetCategoryListDto>>> Handle(
         GetCategoriesQuery request,
         CancellationToken cancellationToken) =>
-        await _dbcontext.Categories
-        .Select(o => Map(o))
+        await _dbcontext.Categories.ProjectTo<GetCategoryListDto>(_mapper.ConfigurationProvider)
         .ToListAsync(cancellationToken);
-
-    private static GetCategoryListDto Map(Category category) => new()
-    {
-        Id = category.Id,
-        Name = category.Name,
-        PriceOfHourse = category.PriceOfHourse,
-    };
 }
-
