@@ -1,21 +1,20 @@
-﻿namespace HA.Application.Common.Models.Errors;
+﻿using HA.ResultDomain;
 
-public class ValidationError : ErrorBase
+namespace HA.Application.Common.Models.Errors;
+
+public class ValidationError : IError
 {
-    public const string DefaultMessage = "Произошла одна или несколько ошибок проверки";
-
-    public ValidationError(string errorKey, string errorValue) : base(DefaultMessage)
+    public ValidationError(string message)
     {
-        Errors = new Dictionary<string, string[]>()
-        {
-            { errorKey, new[] { errorValue } }
-        };
+        Message = message;
     }
 
-    public ValidationError(Dictionary<string, string[]> errors) : base(DefaultMessage)
+    public ValidationError(Dictionary<string, string[]> errors)
     {
         Errors = errors;
     }
 
-    public Dictionary<string, string[]> Errors { get; } = new();
+    public string Message { get; } = string.Empty;
+
+    public Dictionary<string, string[]> Errors { get; set; } = [];
 }

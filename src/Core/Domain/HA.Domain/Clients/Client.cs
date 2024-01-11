@@ -7,7 +7,9 @@ namespace HA.Domain.Clients;
 /// </summary>
 public class Client : Entity
 {
+    #pragma warning disable CS8618
     private Client() { }
+    #pragma warning restore CS8618
 
     public Client(string name, string surname, string phone, string? patronymic = null)
     {

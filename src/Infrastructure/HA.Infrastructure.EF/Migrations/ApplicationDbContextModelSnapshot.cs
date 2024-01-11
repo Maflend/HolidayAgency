@@ -18,13 +18,13 @@ namespace HA.Infrastructure.EF.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "hstore");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("HA.Domain.Entities.Category", b =>
+            modelBuilder.Entity("HA.Domain.Categories.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,7 +42,7 @@ namespace HA.Infrastructure.EF.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("HA.Domain.Entities.Client", b =>
+            modelBuilder.Entity("HA.Domain.Clients.Client", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,7 +68,7 @@ namespace HA.Infrastructure.EF.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("HA.Domain.Entities.EventFile", b =>
+            modelBuilder.Entity("HA.Domain.Files.EventFile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,7 +95,7 @@ namespace HA.Infrastructure.EF.Migrations
                     b.ToTable("EventFiles");
                 });
 
-            modelBuilder.Entity("HA.Domain.Entities.Orders.BaseOrder", b =>
+            modelBuilder.Entity("HA.Domain.Orders.BaseOrder", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -119,7 +119,8 @@ namespace HA.Infrastructure.EF.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(21)
+                        .HasColumnType("character varying(21)");
 
                     b.Property<DateTime>("EventDate")
                         .HasColumnType("timestamp with time zone");
@@ -137,9 +138,9 @@ namespace HA.Infrastructure.EF.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("HA.Domain.Entities.Orders.CompletedOrder", b =>
+            modelBuilder.Entity("HA.Domain.Orders.CompletedOrder", b =>
                 {
-                    b.HasBaseType("HA.Domain.Entities.Orders.BaseOrder");
+                    b.HasBaseType("HA.Domain.Orders.BaseOrder");
 
                     b.Property<string>("EventPlan")
                         .IsRequired()
@@ -152,9 +153,9 @@ namespace HA.Infrastructure.EF.Migrations
                     b.HasDiscriminator().HasValue("CompletedOrder");
                 });
 
-            modelBuilder.Entity("HA.Domain.Entities.Orders.ConfirmedOrder", b =>
+            modelBuilder.Entity("HA.Domain.Orders.ConfirmedOrder", b =>
                 {
-                    b.HasBaseType("HA.Domain.Entities.Orders.BaseOrder");
+                    b.HasBaseType("HA.Domain.Orders.BaseOrder");
 
                     b.Property<string>("EventPlan")
                         .IsRequired()
@@ -176,31 +177,31 @@ namespace HA.Infrastructure.EF.Migrations
                     b.HasDiscriminator().HasValue("ConfirmedOrder");
                 });
 
-            modelBuilder.Entity("HA.Domain.Entities.Orders.UnprocessedOrder", b =>
+            modelBuilder.Entity("HA.Domain.Orders.UnprocessedOrder", b =>
                 {
-                    b.HasBaseType("HA.Domain.Entities.Orders.BaseOrder");
+                    b.HasBaseType("HA.Domain.Orders.BaseOrder");
 
                     b.HasDiscriminator().HasValue("UnprocessedOrder");
                 });
 
-            modelBuilder.Entity("HA.Domain.Entities.EventFile", b =>
+            modelBuilder.Entity("HA.Domain.Files.EventFile", b =>
                 {
-                    b.HasOne("HA.Domain.Entities.Orders.CompletedOrder", null)
+                    b.HasOne("HA.Domain.Orders.CompletedOrder", null)
                         .WithMany("Files")
                         .HasForeignKey("CompletedOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HA.Domain.Entities.Orders.BaseOrder", b =>
+            modelBuilder.Entity("HA.Domain.Orders.BaseOrder", b =>
                 {
-                    b.HasOne("HA.Domain.Entities.Category", "Category")
+                    b.HasOne("HA.Domain.Categories.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HA.Domain.Entities.Client", "Client")
+                    b.HasOne("HA.Domain.Clients.Client", "Client")
                         .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -211,7 +212,7 @@ namespace HA.Infrastructure.EF.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("HA.Domain.Entities.Orders.CompletedOrder", b =>
+            modelBuilder.Entity("HA.Domain.Orders.CompletedOrder", b =>
                 {
                     b.Navigation("Files");
                 });

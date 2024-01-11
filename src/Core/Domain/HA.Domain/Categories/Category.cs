@@ -7,7 +7,9 @@ namespace HA.Domain.Categories;
 /// </summary>
 public class Category : Entity
 {
+    #pragma warning disable CS8618
     private Category() { }
+    #pragma warning restore CS8618
 
     public Category(string name, decimal priceOfHourse)
     {

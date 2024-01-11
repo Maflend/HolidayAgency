@@ -1,6 +1,6 @@
 ﻿
 
-using HA.Api.Endpoints.Clients.GetClientsById;
+using HA.Api.Endpoints.Clients.GetClientById;
 
 namespace HA.Api.Endpoints.Clients;
 

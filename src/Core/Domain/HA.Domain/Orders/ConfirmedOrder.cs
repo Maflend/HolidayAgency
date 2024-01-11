@@ -7,7 +7,9 @@ public class ConfirmedOrder : BaseOrder
 {
     private decimal _discountPerHour = 0;
 
+    #pragma warning disable CS8618
     private ConfirmedOrder() { }
+    #pragma warning restore CS8618
 
     public ConfirmedOrder(
         UnprocessedOrder unprocessedOrder,

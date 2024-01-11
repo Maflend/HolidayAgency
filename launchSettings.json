@@ -5,16 +5,6 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "ha.api": "StartDebugging",
-        "pgadmin": "DoNotStart",
-        "postgres": "StartWithoutDebugging"
-      }
-    },
-    "Docker Compose With pgadmin": {
-      "commandName": "DockerCompose",
-      "commandVersion": "1.0",
-      "serviceActions": {
-        "ha.api": "StartDebugging",
-        "pgadmin": "StartWithoutDebugging",
         "postgres": "StartWithoutDebugging"
       }
     }

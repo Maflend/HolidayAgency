@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using HA.Application.Common.Persistence;
+using HA.Application.Dependencies.Persistence;
 
 namespace HA.Infrastructure.EF;
 public static class DependencyConfiguration

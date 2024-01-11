@@ -1,5 +1,5 @@
-﻿using FluentResults.Extensions.AspNetCore;
-using HA.Application.Orders.CreateOrder;
+﻿using HA.Application.UseCases.Orders.CreateOrder;
+using HA.ResultAsp.MinimalApi;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -28,8 +28,7 @@ public static class CreateOrderEndpoint
                     new OpenApiParameter()
                     {
                         Name = "createOrderCommand",
-                        Description = "Информация для создания заказа.",
-                        
+                        Description = "Информация для создания заказа."
                     }
                 };
 
@@ -37,10 +36,10 @@ public static class CreateOrderEndpoint
             });
     }
 
-    internal static Task<ActionResult> CreateAsync(
+    internal static Task<IResult> CreateAsync(
         ISender sender,
         CreateOrderCommand createOrderCommand)
     {
-        return sender.Send(createOrderCommand).ToActionResult();
+        return sender.Send(createOrderCommand).ToMinimalApiResult();
     }
 }

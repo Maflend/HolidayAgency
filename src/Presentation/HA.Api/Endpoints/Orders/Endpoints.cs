@@ -1,6 +1,6 @@
 ﻿using HA.Api.Endpoints.Orders.ConfirmOrder;
 using HA.Api.Endpoints.Orders.CreateOrder;
-using HA.Api.Endpoints.Orders.GetUnprocessedByIdOrders;
+using HA.Api.Endpoints.Orders.GetUnprocessedByIdOrder;
 using HA.Api.Endpoints.Orders.GetUnprocessedOrders;
 
 namespace HA.Api.Endpoints.Orders;
