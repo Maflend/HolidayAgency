@@ -7,7 +7,9 @@ namespace HA.Domain.Orders;
 /// </summary>
 public class CompletedOrder : BaseOrder
 {
+    #pragma warning disable CS8618
     private CompletedOrder() { }
+    #pragma warning restore CS8618
 
     public CompletedOrder(
         ConfirmedOrder confirmedOrder)

@@ -7,6 +7,7 @@ namespace HA.Application.Common.Behaviors;
 
 public class ValidationPiplineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TResponse : ResultBase, new()
+    where TRequest : notnull
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -38,10 +39,12 @@ public class ValidationPiplineBehavior<TRequest, TResponse> : IPipelineBehavior<
                 })
             .ToDictionary(x => x.Key, x => x.Values);
 
-        if (errorsDictionary.Any())
+        if (errorsDictionary.Count != 0)
         {
-            var result = new TResponse();
-            result.Error = new ValidationError(errorsDictionary);
+            var result = new TResponse
+            {
+                Error = new ValidationError(errorsDictionary)
+            };
 
             return result;
         }

@@ -14,7 +14,7 @@ public class ValidationError : IError
         Errors = errors;
     }
 
-    public string Message { get; }
+    public string Message { get; } = string.Empty;
 
-    public Dictionary<string, string[]> Errors { get; set; }
+    public Dictionary<string, string[]> Errors { get; set; } = [];
 }

@@ -1,5 +1,4 @@
-﻿using HA.Application.Orders.GetUnprocessedOrders;
-using HA.Application.Orders.GetUnprocessedOrders.Response;
+﻿using HA.Application.UseCases.Orders.GetUnprocessedOrders;
 using HA.ResultAsp.MinimalApi;
 using MediatR;
 
@@ -16,7 +15,7 @@ public static class GetUnprocessedOrdersEndpoint
     public static void MapGetUnprocessedOrdersEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("unprocessed", GetUnprocessedOrdersAsync)
-            .Produces(200, typeof(List<GetUnprocessedOrderListDto>))
+            .Produces(200, typeof(List<GetUnprocessedOrdersResponse>))
             .WithOpenApi(opts =>
             {
                 opts.Summary = "Получить необработанные заказы.";

@@ -1,4 +1,4 @@
-﻿using HA.Application.Orders.CreateOrder;
+﻿using HA.Application.UseCases.Orders.CreateOrder;
 using HA.ResultAsp.MinimalApi;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

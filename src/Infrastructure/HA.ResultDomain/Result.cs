@@ -14,7 +14,7 @@ public class Result<TValue> : ResultBase
         Error = error;
     }
 
-    public TValue Value { get; set; }
+    public TValue? Value { get; set; }
 
     public static Result<TValue> Fail(IError error)
     {
@@ -39,5 +39,5 @@ public abstract class ResultBase
     public bool IsSuccess => _isSuccess;
     public bool IsFailure => !_isSuccess;
 
-    public IError Error { get; set; }
+    public IError? Error { get; set; }
 }

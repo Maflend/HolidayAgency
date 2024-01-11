@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using HA.Application.Common.Persistence;
 using System.Reflection;
+using HA.Application.Dependencies.Persistence;
 using HA.Domain.Orders;
-using HA.Domain.Clients;
 using HA.Domain.Categories;
+using HA.Domain.Clients;
 using HA.Domain.Files;
 
 namespace HA.Infrastructure.EF.Contexts;

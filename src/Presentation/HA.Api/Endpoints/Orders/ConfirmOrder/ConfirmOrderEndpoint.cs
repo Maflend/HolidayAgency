@@ -1,5 +1,5 @@
 ﻿using HA.Api.Endpoints.Orders.ConfirmOrder.Requests;
-using HA.Application.Orders.ConfirmOrder;
+using HA.Application.UseCases.Orders.ConfirmOrder;
 using HA.ResultAsp.MinimalApi;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

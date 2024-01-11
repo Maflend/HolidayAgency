@@ -6,7 +6,7 @@ services:
     image: ${DOCKER_REGISTRY-}haapi
     build:
       context: .
-      dockerfile: src/Presentation/HA.Api/Dockerfile
+      dockerfile: src/HA.Api/Dockerfile
     environment:
         - ConnectionStrings__Postgres=Host=ha.postgres;Port=5432;Database=HolidayAgency;UserName=postgres;Password=thebestpassword123
     depends_on:
@@ -24,20 +24,5 @@ services:
     volumes:
         - postgres-data:/var/lib/postgresql/data
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin4_container
-    restart: always
-    ports:
-      - "5050:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: dev@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    depends_on:
-        - postgres
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-
 volumes:
   postgres-data:
-  pgadmin-data:

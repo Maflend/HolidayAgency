@@ -1,4 +1,4 @@
-﻿using HA.Application.Categories.GetCategories;
+﻿using HA.Application.UseCases.Categories.GetCategories;
 using HA.ResultAsp.MinimalApi;
 using MediatR;
 
