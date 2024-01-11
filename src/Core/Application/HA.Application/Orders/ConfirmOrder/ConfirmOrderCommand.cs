@@ -1,4 +1,4 @@
-﻿using FluentResults;
+﻿using HA.ResultDomain;
 using MediatR;
 
 namespace HA.Application.Orders.ConfirmOrder;

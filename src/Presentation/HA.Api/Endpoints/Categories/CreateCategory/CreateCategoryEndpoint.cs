@@ -1,5 +1,5 @@
-﻿using FluentResults.Extensions.AspNetCore;
-using HA.Application.Categories.CreateCategory;
+﻿using HA.Application.Categories.CreateCategory;
+using HA.ResultAsp.MinimalApi;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -37,10 +37,10 @@ public static class CreateCategoryEndpoint
             });
     }
 
-    internal static Task<ActionResult> CreateCategoryAsync(
+    internal static Task<IResult> CreateCategoryAsync(
         ISender sender,
         [FromBody] CreateCategoryCommand createCategoryCommand)
     {
-        return sender.Send(createCategoryCommand).ToActionResult();
+        return sender.Send(createCategoryCommand).ToMinimalApiResult();
     }
 }

@@ -1,7 +1,7 @@
-﻿using FluentResults;
-using HA.Application.Common.Persistence;
+﻿using HA.Application.Common.Persistence;
 using HA.Domain.Clients;
 using HA.Domain.Orders;
+using HA.ResultDomain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

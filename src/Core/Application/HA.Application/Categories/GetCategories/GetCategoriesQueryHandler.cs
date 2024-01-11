@@ -1,6 +1,6 @@
-﻿using FluentResults;
-using HA.Application.Common.Persistence;
+﻿using HA.Application.Common.Persistence;
 using HA.Domain.Categories;
+using HA.ResultDomain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

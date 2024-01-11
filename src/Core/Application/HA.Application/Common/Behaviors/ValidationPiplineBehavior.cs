@@ -1,6 +1,6 @@
-﻿using FluentResults;
-using FluentValidation;
+﻿using FluentValidation;
 using HA.Application.Common.Models.Errors;
+using HA.ResultDomain;
 using MediatR;
 
 namespace HA.Application.Common.Behaviors;
@@ -41,7 +41,7 @@ public class ValidationPiplineBehavior<TRequest, TResponse> : IPipelineBehavior<
         if (errorsDictionary.Any())
         {
             var result = new TResponse();
-            result.Reasons.Add(new ValidationError(errorsDictionary));
+            result.Error = new ValidationError(errorsDictionary);
 
             return result;
         }

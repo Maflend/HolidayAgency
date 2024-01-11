@@ -1,8 +1,7 @@
-﻿using FluentResults.Extensions.AspNetCore;
-using HA.Application.Orders.GetUnprocessedOrders;
+﻿using HA.Application.Orders.GetUnprocessedOrders;
 using HA.Application.Orders.GetUnprocessedOrders.Response;
+using HA.ResultAsp.MinimalApi;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HA.Api.Endpoints.Orders.GetUnprocessedOrders;
 
@@ -27,9 +26,9 @@ public static class GetUnprocessedOrdersEndpoint
             });
     }
 
-    internal static Task<ActionResult> GetUnprocessedOrdersAsync(
+    internal static Task<IResult> GetUnprocessedOrdersAsync(
         ISender sender)
     {
-        return sender.Send(new GetUnprocessedOrdersQuery()).ToActionResult();
+        return sender.Send(new GetUnprocessedOrdersQuery()).ToMinimalApiResult();
     }
 }

@@ -1,15 +1,13 @@
-﻿using FluentResults;
+﻿using HA.ResultDomain;
 
 namespace HA.Application.Common.Models.Errors;
 
-public class NotFoundError : ErrorBase
+public class NotFoundError : IError
 {
-    public NotFoundError(string message) : base(message)
+    public NotFoundError(string message)
     {
+        Message = message;
     }
 
-    public NotFoundError(string message, IError causedBy)
-        : base(message, causedBy)
-    {
-    }
+    public string Message { get; }
 }

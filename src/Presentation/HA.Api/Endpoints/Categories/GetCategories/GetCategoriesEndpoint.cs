@@ -1,7 +1,6 @@
-﻿using FluentResults.Extensions.AspNetCore;
-using HA.Application.Categories.GetCategories;
+﻿using HA.Application.Categories.GetCategories;
+using HA.ResultAsp.MinimalApi;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HA.Api.Endpoints.Categories.GetCategories;
 
@@ -26,9 +25,9 @@ public static class GetCategoriesEndpoint
             });
     }
 
-    internal static Task<ActionResult> GetCategoriesAsync(
+    internal static Task<IResult> GetCategoriesAsync(
         ISender sender)
     {
-        return sender.Send(new GetCategoriesQuery()).ToActionResult();
+        return sender.Send(new GetCategoriesQuery()).ToMinimalApiResult();
     }
 }

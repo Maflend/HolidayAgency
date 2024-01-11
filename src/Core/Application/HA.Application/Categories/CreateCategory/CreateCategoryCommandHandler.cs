@@ -1,7 +1,8 @@
-﻿using FluentResults;
+﻿using AutoMapper;
 using HA.Application.Common.Models.Errors;
 using HA.Application.Common.Persistence;
 using HA.Domain.Categories;
+using HA.ResultDomain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +23,7 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
 
         if (isNameTaken)
         {
-            return Result.Fail(new ValidationError(nameof(request.Name), "Категория с таким именем уже существует"));
+            return Result<Guid>.Fail(new ValidationError("Категория с таким именем уже существует"));
         }
 
         var category = new Category(request.Name, request.PriceOfHourse);

@@ -1,6 +1,6 @@
-﻿using FluentResults.Extensions.AspNetCore;
-using HA.Api.Endpoints.Orders.ConfirmOrder.Requests;
+﻿using HA.Api.Endpoints.Orders.ConfirmOrder.Requests;
 using HA.Application.Orders.ConfirmOrder;
+using HA.ResultAsp.MinimalApi;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -45,7 +45,7 @@ public static class ConfirmOrderEndpoint
             });
     }
 
-    internal static Task<ActionResult> ConfirmAsync(
+    internal static Task<IResult> ConfirmAsync(
      ISender sender,
      [FromRoute] Guid id,
      [FromBody] ConfirmOrderRequest confirmOrderRequest)
@@ -54,6 +54,6 @@ public static class ConfirmOrderEndpoint
            id,
            confirmOrderRequest.EventPlan,
            confirmOrderRequest.Peoples,
-           confirmOrderRequest.DiscountPerHour)).ToActionResult();
+           confirmOrderRequest.DiscountPerHour)).ToMinimalApiResult();
     }
 }

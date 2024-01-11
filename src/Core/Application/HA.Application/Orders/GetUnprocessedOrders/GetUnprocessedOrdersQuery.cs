@@ -1,5 +1,5 @@
-﻿using FluentResults;
-using HA.Application.Orders.GetUnprocessedOrders.Response;
+﻿using HA.Application.Orders.GetUnprocessedOrders.Response;
+using HA.ResultDomain;
 using MediatR;
 
 namespace HA.Application.Orders.GetUnprocessedOrders;
@@ -7,4 +7,4 @@ namespace HA.Application.Orders.GetUnprocessedOrders;
 /// <summary>
 /// Запрос на получение необработанных заказов.
 /// </summary>
-public class GetUnprocessedOrdersQuery : IRequest<Result<List<GetUnprocessedOrderListDto>>> { }
+public record GetUnprocessedOrdersQuery : IRequest<Result<List<GetUnprocessedOrderListDto>>>;
