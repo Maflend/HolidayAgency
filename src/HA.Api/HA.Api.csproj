@@ -26,11 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Application\HA.Application\HA.Application.csproj" />
-    <ProjectReference Include="..\..\Core\Domain\HA.Domain\HA.Domain.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\HA.Infrastructure.EF\HA.Infrastructure.EF.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\HA.ResultAsp\HA.ResultAsp.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\HA.ResultDomain\HA.ResultDomain.csproj" />
+    <ProjectReference Include="..\Core\Application\HA.Application\HA.Application.csproj" />
+    <ProjectReference Include="..\Core\Domain\HA.Domain\HA.Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\HA.Infrastructure.EF\HA.Infrastructure.EF.csproj" />
+    <ProjectReference Include="..\Infrastructure\HA.ResultAsp\HA.ResultAsp.csproj" />
+    <ProjectReference Include="..\Infrastructure\HA.ResultDomain\HA.ResultDomain.csproj" />
   </ItemGroup>
 
 </Project>
