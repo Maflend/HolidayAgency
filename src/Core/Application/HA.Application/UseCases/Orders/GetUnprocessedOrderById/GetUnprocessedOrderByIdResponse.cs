@@ -1,11 +1,11 @@
-﻿using HA.Application.UseCases.Orders.GetUnprocessedOrders.Responses;
+﻿using HA.Application.UseCases.Orders.GetUnprocessedOrderById.Responces;
 
-namespace HA.Application.UseCases.Orders.GetUnprocessedOrders;
+namespace HA.Application.UseCases.Orders.GetUnprocessedOrderById;
 
 /// <summary>
 /// Информация о необработанном заказе.
 /// </summary>
-public class GetUnprocessedOrdersResponse
+public class GetUnprocessedOrderByIdResponse
 {
     /// <summary>
     /// Идентификатор.
@@ -33,12 +33,13 @@ public class GetUnprocessedOrdersResponse
     public int CountPeople { get; set; }
 
     /// <summary>
-    /// Клиент.
-    /// </summary>
-    public GetUnprocessedOrdersClientInfoDto Client { get; set; } = null!;
-
-    /// <summary>
     /// Категория.
     /// </summary>
     public string CategoryName { get; set; } = null!;
+
+    /// <summary>
+    /// Клиент.
+    /// </summary>
+    public GetUnprocessedOrderByIdClientInfoDto Client { get; set; } = null!;
 }
+

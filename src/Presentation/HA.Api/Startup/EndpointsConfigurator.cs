@@ -1,4 +1,5 @@
 ﻿using HA.Api.Endpoints.Categories;
+using HA.Api.Endpoints.Clients;
 using HA.Api.Endpoints.Orders;
 
 namespace HA.Api.Startup;
@@ -15,7 +16,7 @@ public static class EndpointsConfigurator
     {
         app.MapCategoryEndpoints();
         app.MapOrdersEndpoints();
-
+        app.MapСlientsEndpoints();
         return app;
     }
 }

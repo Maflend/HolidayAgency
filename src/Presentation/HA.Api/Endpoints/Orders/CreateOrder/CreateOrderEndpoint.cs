@@ -38,7 +38,7 @@ public static class CreateOrderEndpoint
 
     internal static Task<IResult> CreateAsync(
         ISender sender,
-        [FromBody] CreateOrderCommand createOrderCommand)
+        CreateOrderCommand createOrderCommand)
     {
         return sender.Send(createOrderCommand).ToMinimalApiResult();
     }

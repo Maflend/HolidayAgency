@@ -1,5 +1,6 @@
 ﻿using HA.Api.Endpoints.Orders.ConfirmOrder;
 using HA.Api.Endpoints.Orders.CreateOrder;
+using HA.Api.Endpoints.Orders.GetUnprocessedByIdOrder;
 using HA.Api.Endpoints.Orders.GetUnprocessedOrders;
 
 namespace HA.Api.Endpoints.Orders;
@@ -19,6 +20,7 @@ public static class Endpoints
         group.MapGetUnprocessedOrdersEndpoint();
         group.MapCreateOrderEndpoint();
         group.MapConfirmOrderEndpoint();
+        group.MapGetUnprocessedOrderByIdEndpoint();
 
         return app;
     }

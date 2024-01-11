@@ -3,7 +3,7 @@
 /// <summary>
 /// Информация о клиенте.
 /// </summary>
-public class ClientInfoDto
+public class GetUnprocessedOrdersClientInfoDto
 {
     /// <summary>
     /// Индентификатор.
