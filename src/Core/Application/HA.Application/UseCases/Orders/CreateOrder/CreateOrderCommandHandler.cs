@@ -1,6 +1,7 @@
 ﻿using HA.Application.Dependencies.DataAccess.Clients.Queries;
 using HA.Application.Dependencies.DataAccess.Common.Queries;
 using HA.Application.Dependencies.Persistence;
+using HA.Domain.Categories;
 using HA.Domain.Clients;
 using HA.Domain.Orders;
 using HA.ResultDomain;
@@ -13,11 +14,11 @@ public class CreateOrderCommandHandler(IApplicationDbContext dbContext)
 {
     public async Task<Result<Guid>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        var client = await dbContext.Clients.GetByPhoneAsync(request.Phone, cancellationToken);
+        var client = await dbContext.Set<Client>().GetByPhoneAsync(request.Phone, cancellationToken);
 
         client ??= new Client(request.FirstName, request.LastName, request.Phone, request.Patronymic);
 
-        var category = await dbContext.Categories.GetByIdAsync(request.CategoryId, cancellationToken);
+        var category = await dbContext.Set<Category>().GetByIdAsync(request.CategoryId, cancellationToken);
 
         var unprocessedOrder = new UnprocessedOrder(
             category!,
@@ -27,7 +28,7 @@ public class CreateOrderCommandHandler(IApplicationDbContext dbContext)
             request.CountHourse,
             request.CountPeople);
 
-        await dbContext.UnprocessedOrders.AddAsync(unprocessedOrder, cancellationToken);
+        await dbContext.Set<UnprocessedOrder>().AddAsync(unprocessedOrder, cancellationToken);
 
         await dbContext.SaveChangesAsync(cancellationToken);
 

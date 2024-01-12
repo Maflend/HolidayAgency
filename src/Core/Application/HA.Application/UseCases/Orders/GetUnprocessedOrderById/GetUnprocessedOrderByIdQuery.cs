@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using HA.Application.Common.Exceptions;
 using HA.Application.Common.Models.Errors;
+using HA.Application.Dependencies.DataAccess.Common.Queries;
 using HA.Application.Dependencies.Persistence;
+using HA.Domain.Orders;
 using HA.ResultDomain;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace HA.Application.UseCases.Orders.GetUnprocessedOrderById;
 
@@ -17,16 +17,15 @@ public record GetUnprocessedOrderByIdQuery(Guid Id) : IRequest<Result<GetUnproce
 /// <summary>
 /// Обработчик запроса на получение необработанного заказа по идентификатору.
 /// </summary>
-public class GetUnprocessedOrderByIdQueryHandler(IApplicationDbContext dbContext, IMapper mapper) 
+public class GetUnprocessedOrderByIdQueryHandler(IApplicationDbContext _dbContext, IMapper _mapper) 
     : IRequestHandler<GetUnprocessedOrderByIdQuery, Result<GetUnprocessedOrderByIdResponse>>
 {
     public async Task<Result<GetUnprocessedOrderByIdResponse>> Handle(
         GetUnprocessedOrderByIdQuery request,
         CancellationToken cancellationToken)
     {
-        var existingUnprocessedOrder = await dbContext.UnprocessedOrders
-            .ProjectTo<GetUnprocessedOrderByIdResponse>(mapper.ConfigurationProvider)
-            .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken)
+        var existingUnprocessedOrder = await _dbContext.Set<UnprocessedOrder>()
+            .GetProjectedByIdAsync<UnprocessedOrder, GetUnprocessedOrderByIdResponse>(request.Id, _mapper, cancellationToken)
             .ThrowEntityNotFound(request.Id);
 
         if (existingUnprocessedOrder is null)

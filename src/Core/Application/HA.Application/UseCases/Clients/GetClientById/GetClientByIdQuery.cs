@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using HA.Application.Common.Models.Errors;
+using HA.Application.Dependencies.DataAccess.Common.Queries;
 using HA.Application.Dependencies.Persistence;
+using HA.Domain.Clients;
 using HA.ResultDomain;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace HA.Application.UseCases.Clients.GetClientById;
 
@@ -17,14 +17,13 @@ public record GetClientByIdQuery(Guid Id) : IRequest<Result<GetClientByIdRespons
 /// <summary>
 /// Обработчик запроса на получение клиента по идентификатору.
 /// </summary>
-public class GetClientByidQueryHandler(IApplicationDbContext dbContext, IMapper mapper) 
+public class GetClientByidQueryHandler(IApplicationDbContext _dbContext, IMapper _mapper) 
     : IRequestHandler<GetClientByIdQuery, Result<GetClientByIdResponse>>
 {
     public async Task<Result<GetClientByIdResponse>> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
     {
-        var existingClient = await dbContext.Clients
-            .ProjectTo<GetClientByIdResponse>(mapper.ConfigurationProvider)
-            .SingleOrDefaultAsync(item => item.Id == request.Id, cancellationToken);
+        var existingClient = await _dbContext.Set<Client>()
+            .GetProjectedByIdAsync<Client, GetClientByIdResponse>(request.Id, _mapper, cancellationToken);
 
         if (existingClient is null)
         {

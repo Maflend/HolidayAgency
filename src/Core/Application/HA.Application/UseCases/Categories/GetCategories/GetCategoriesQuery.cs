@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using HA.Application.Common.Models.Paging;
+using HA.Application.Dependencies.DataAccess.Common.Queries;
 using HA.Application.Dependencies.Persistence;
+using HA.Domain.Categories;
 using HA.ResultDomain;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace HA.Application.UseCases.Categories.GetCategories;
 
@@ -23,9 +23,8 @@ public class GetCategoriesQueryHandler(IApplicationDbContext _dbContext, IMapper
         GetCategoriesQuery request,
         CancellationToken cancellationToken)
     {
-        return await _dbContext.Categories
-            .ProjectTo<GetCategoriesResponse>(_mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+        return await _dbContext.Set<Category>()
+            .GetProjectedListAsync<Category, GetCategoriesResponse>(_mapper, cancellationToken);
     }
 }
 

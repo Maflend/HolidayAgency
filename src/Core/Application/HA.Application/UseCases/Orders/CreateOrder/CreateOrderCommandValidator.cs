@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using HA.Application.Dependencies.Persistence;
+using HA.Domain.Categories;
 using Microsoft.EntityFrameworkCore;
 
 namespace HA.Application.UseCases.Orders.CreateOrder;
@@ -39,6 +40,6 @@ public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 
     private Task<bool> CheckCategoryExistAsync(Guid categoryId, CancellationToken cancellationToken = default)
     {
-        return _applicationDbContext.Categories.AnyAsync(c => c.Id == categoryId, cancellationToken);
+        return _applicationDbContext.Set<Category>().AnyAsync(c => c.Id == categoryId, cancellationToken);
     }
 }

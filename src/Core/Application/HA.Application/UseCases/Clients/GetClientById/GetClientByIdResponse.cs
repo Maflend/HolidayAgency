@@ -1,12 +1,13 @@
 ﻿using HA.Application.Common.Mapping;
 using HA.Domain.Clients;
+using HA.Domain.Common;
 
 namespace HA.Application.UseCases.Clients.GetClientById;
 
 /// <summary>
 /// Информация о клиенте.
 /// </summary>
-public class GetClientByIdResponse : IMapFrom<Client>
+public class GetClientByIdResponse : IHasId, IMapFrom<Client>
 {
     /// <summary>
     /// Индентификатор.

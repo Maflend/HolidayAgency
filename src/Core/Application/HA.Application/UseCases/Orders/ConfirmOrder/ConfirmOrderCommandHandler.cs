@@ -15,7 +15,7 @@ public class ConfirmOrderCommandHandler(IApplicationDbContext applicationDbConte
 {
     public async Task<Result<Guid>> Handle(ConfirmOrderCommand request, CancellationToken cancellationToken)
     {
-        var unprocessedOrder = await applicationDbContext.UnprocessedOrders
+        var unprocessedOrder = await applicationDbContext.Set<UnprocessedOrder>()
             .GetByIdAsync(request.UnprocessedOrderId, cancellationToken)
             .ThrowEntityNotFound(request.UnprocessedOrderId);
 
@@ -25,7 +25,7 @@ public class ConfirmOrderCommandHandler(IApplicationDbContext applicationDbConte
             request.Peoples,
             request.DiscountPerHour!.Value);
 
-        await applicationDbContext.ConfirmedOrders.AddAsync(confirmedOrder, cancellationToken);
+        await applicationDbContext.Set<ConfirmedOrder>().AddAsync(confirmedOrder, cancellationToken);
 
         await applicationDbContext.SaveChangesAsync(cancellationToken);
 

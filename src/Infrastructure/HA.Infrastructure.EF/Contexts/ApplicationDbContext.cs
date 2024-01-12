@@ -5,6 +5,7 @@ using HA.Domain.Orders;
 using HA.Domain.Categories;
 using HA.Domain.Clients;
 using HA.Domain.Files;
+using HA.Domain.Common;
 
 namespace HA.Infrastructure.EF.Contexts;
 public class ApplicationDbContext : DbContext, IApplicationDbContext
@@ -20,8 +21,14 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<Client> Clients { get; set; }
     public DbSet<EventFile> EventFiles { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+
+    DbSet<TEntity> IApplicationDbContext.Set<TEntity>()
+    {
+        return Set<TEntity>();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HA.Application.Common.Mapping;
 using HA.Application.UseCases.Orders.GetUnprocessedOrderById.Responces;
+using HA.Domain.Common;
 using HA.Domain.Orders;
 
 namespace HA.Application.UseCases.Orders.GetUnprocessedOrderById;
@@ -8,7 +9,7 @@ namespace HA.Application.UseCases.Orders.GetUnprocessedOrderById;
 /// <summary>
 /// Информация о необработанном заказе.
 /// </summary>
-public class GetUnprocessedOrderByIdResponse : IMapFrom<UnprocessedOrder>
+public class GetUnprocessedOrderByIdResponse : IHasId, IMapFrom<UnprocessedOrder>
 {
     /// <summary>
     /// Идентификатор.
