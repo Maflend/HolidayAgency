@@ -1,11 +1,14 @@
-﻿using HA.Application.UseCases.Orders.GetUnprocessedOrderById.Responces;
+﻿using AutoMapper;
+using HA.Application.Common.Mapping;
+using HA.Application.UseCases.Orders.GetUnprocessedOrderById.Responces;
+using HA.Domain.Orders;
 
 namespace HA.Application.UseCases.Orders.GetUnprocessedOrderById;
 
 /// <summary>
 /// Информация о необработанном заказе.
 /// </summary>
-public class GetUnprocessedOrderByIdResponse
+public class GetUnprocessedOrderByIdResponse : IMapFrom<UnprocessedOrder>
 {
     /// <summary>
     /// Идентификатор.
@@ -41,5 +44,11 @@ public class GetUnprocessedOrderByIdResponse
     /// Клиент.
     /// </summary>
     public GetUnprocessedOrderByIdClientInfoDto Client { get; set; } = null!;
+
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<UnprocessedOrder, GetUnprocessedOrderByIdResponse>()
+            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
+    }
 }
 

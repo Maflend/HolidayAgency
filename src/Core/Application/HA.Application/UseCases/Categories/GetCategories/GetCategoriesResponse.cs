@@ -1,9 +1,12 @@
-﻿namespace HA.Application.UseCases.Categories.GetCategories;
+﻿using HA.Application.Common.Mapping;
+using HA.Domain.Categories;
+
+namespace HA.Application.UseCases.Categories.GetCategories;
 
 /// <summary>
 /// Информация о категории.
 /// </summary>
-public class GetCategoryListDto
+public class GetCategoriesResponse : IMapFrom<Category>
 {
     /// <summary>
     /// Идентификатор.

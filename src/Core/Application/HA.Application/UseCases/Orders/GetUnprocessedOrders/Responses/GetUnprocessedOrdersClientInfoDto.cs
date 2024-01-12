@@ -1,9 +1,12 @@
-﻿namespace HA.Application.UseCases.Orders.GetUnprocessedOrders.Responses;
+﻿using HA.Application.Common.Mapping;
+using HA.Domain.Clients;
+
+namespace HA.Application.UseCases.Orders.GetUnprocessedOrders.Responses;
 
 /// <summary>
 /// Информация о клиенте.
 /// </summary>
-public class GetUnprocessedOrdersClientInfoDto
+public class GetUnprocessedOrdersClientInfoDto : IMapFrom<Client>
 {
     /// <summary>
     /// Индентификатор.

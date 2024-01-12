@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using HA.Application.Common.Exceptions;
 using HA.Application.Common.Models.Errors;
 using HA.Application.Dependencies.Persistence;
 using HA.ResultDomain;
@@ -25,7 +26,8 @@ public class GetUnprocessedOrderByIdQueryHandler(IApplicationDbContext dbContext
     {
         var existingUnprocessedOrder = await dbContext.UnprocessedOrders
             .ProjectTo<GetUnprocessedOrderByIdResponse>(mapper.ConfigurationProvider)
-            .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
+            .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken)
+            .ThrowEntityNotFound(request.Id);
 
         if (existingUnprocessedOrder is null)
         {

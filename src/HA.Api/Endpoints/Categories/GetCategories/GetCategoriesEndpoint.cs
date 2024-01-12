@@ -15,7 +15,7 @@ public static class GetCategoriesEndpoint
     public static void MapGetCategoriesEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("", GetCategoriesAsync)
-            .Produces(200, typeof(List<GetCategoryListDto>))
+            .Produces(200, typeof(List<GetCategoriesResponse>))
             .WithOpenApi(opts =>
             {
                 opts.Summary = "Получить категории.";
