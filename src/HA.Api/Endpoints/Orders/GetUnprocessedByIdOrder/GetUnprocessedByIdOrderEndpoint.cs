@@ -8,7 +8,7 @@ public static class GetUnprocessedByIdOrderEndpoint
 {
     public static void MapGetUnprocessedOrderByIdEndpoint(this RouteGroupBuilder group)
     {
-        group.MapGet("{id}/unprocessed", GetUnprocessedOrderByIdAsync)
+        group.MapGet("{id:guid}/unprocessed", GetUnprocessedOrderByIdAsync)
             .Produces(200, typeof(GetUnprocessedOrderByIdResponse))
             .WithOpenApi(opts =>
             {
@@ -26,4 +26,3 @@ public static class GetUnprocessedByIdOrderEndpoint
         return sender.Send(new GetUnprocessedOrderByIdQuery(id)).ToMinimalApiAsync();
     }
 }
-

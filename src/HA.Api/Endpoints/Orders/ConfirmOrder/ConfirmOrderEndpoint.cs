@@ -17,7 +17,7 @@ public static class ConfirmOrderEndpoint
     /// </summary>
     public static void MapConfirmOrderEndpoint(this RouteGroupBuilder group)
     {
-        group.MapPost("{id}/confirm", ConfirmAsync)
+        group.MapPost("{id:guid}/confirm", ConfirmAsync)
             .Produces(200, typeof(Guid))
             .Produces(400, typeof(Result<>))
             .WithOpenApi(opts =>
@@ -40,9 +40,9 @@ public static class ConfirmOrderEndpoint
     }
 
     internal static Task<IResult> ConfirmAsync(
-     ISender sender,
-     Guid id,
-     ConfirmOrderRequest confirmOrderRequest)
+        ISender sender,
+        Guid id,
+        ConfirmOrderRequest confirmOrderRequest)
     {
         return sender.Send(new ConfirmOrderCommand(
            id,

@@ -1,6 +1,7 @@
 ﻿using HA.Api.Endpoints.Categories;
 using HA.Api.Endpoints.Clients;
 using HA.Api.Endpoints.Orders;
+using HA.Application.UseCases.Orders.CreateOrder;
 
 namespace HA.Api.Startup;
 
@@ -17,6 +18,12 @@ public static class EndpointsConfigurator
         app.MapCategoryEndpoints();
         app.MapOrdersEndpoints();
         app.MapСlientsEndpoints();
+
+        app.MapGet("/log", (ILogger<CreateOrderCommandHandler> logger) =>
+        {
+            logger.LogInformation("My test message: {MSG}", "123123");
+            logger.LogInformation($"My test: {0000}");
+        });
         return app;
     }
 }
