@@ -28,7 +28,6 @@
 | Name | Reference |
 |------|-----------|
 | FluentValidation     |   https://github.com/FluentValidation/FluentValidation        |
-| FluentResults     |  https://github.com/altmann/FluentResults         |
 | MediatR     |  https://github.com/jbogard/MediatR         |
 | AutoMapper     | https://github.com/AutoMapper/AutoMapper          |
 
@@ -45,10 +44,6 @@
 <details><summary>Запуск docker compose</summary>
 <br>
 Запуск производится с помощью docker compose. <br>
-Для запуска можно выбрать два варианта: <br>
-- Docker Compose. Запуск всех контейнеров кроме pgadmin <br>
-- Docker Compose With pgadmin. Запустит все контейнеры и pgadmin. Порт смотреть в docker-compose.yml
-<br>
 </details>
 
 <details><summary>Подготовка базы данных</summary>
