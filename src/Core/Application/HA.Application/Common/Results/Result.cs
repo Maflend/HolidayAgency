@@ -49,3 +49,5 @@ public interface IResultBase
     public bool IsSuccess { get; }
     public IError? Error { get; set; }
 }
+
+public class ResultEmpty { }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HA.Application.Common.Models.Paging;
 using HA.Application.Common.Results;
 using HA.Application.Dependencies.DataAccess.Common.Queries;
 using HA.Application.Dependencies.Persistence;
@@ -10,17 +11,19 @@ namespace HA.Application.UseCases.Orders.GetUnprocessedOrders;
 /// <summary>
 /// Запрос на получение необработанных заказов.
 /// </summary>
-public record GetUnprocessedOrdersQuery : IRequest<Result<List<GetUnprocessedOrdersResponse>>>;
+public record GetUnprocessedOrdersQuery : PagingAndSorting, IRequest<Result<PaginatedResponse<GetUnprocessedOrdersResponse>>>;
 
 /// <summary>
 /// Обработчик запроса на получение необработанных заказов.
 /// </summary>
 public class GetUnprocessedOrdersQueryHandler(IApplicationDbContext _dbContext, IMapper _mapper)
-    : IRequestHandler<GetUnprocessedOrdersQuery, Result<List<GetUnprocessedOrdersResponse>>>
+    : IRequestHandler<GetUnprocessedOrdersQuery, Result<PaginatedResponse<GetUnprocessedOrdersResponse>>>
 {
-    public async Task<Result<List<GetUnprocessedOrdersResponse>>> Handle(GetUnprocessedOrdersQuery request, CancellationToken cancellationToken)
+    public async Task<Result<PaginatedResponse<GetUnprocessedOrdersResponse>>> Handle(
+        GetUnprocessedOrdersQuery request,
+        CancellationToken cancellationToken)
     {
         return await _dbContext.Set<UnprocessedOrder>()
-            .GetProjectedListAsync<UnprocessedOrder, GetUnprocessedOrdersResponse>(_mapper, cancellationToken);
+            .GetPaginatedListAsync<UnprocessedOrder, GetUnprocessedOrdersResponse>(request, _mapper, cancellationToken);
     }
 }

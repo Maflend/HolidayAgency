@@ -1,4 +1,5 @@
 ﻿using HA.Application.Common.Exceptions;
+using HA.Application.Common.Results;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,14 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _lo
             };
 
             await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+        }
+
+        if (exception is InvalidPaginationException)
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+
+            var result = Result<ResultEmpty>.Fail(new Error("Pagination", "Неверные параметры для постраничного получения"));
+            await httpContext.Response.WriteAsJsonAsync(result, cancellationToken);
         }
 
         return true;

@@ -11,20 +11,20 @@ namespace HA.Application.UseCases.Categories.GetCategories;
 /// <summary>
 /// Запрос на получение всех категорий.
 /// </summary>
-public record GetCategoriesQuery : PagingAndSorting, IRequest<Result<List<GetCategoriesResponse>>>;
+public record GetCategoriesQuery : PagingAndSorting, IRequest<Result<PaginatedResponse<GetCategoriesResponse>>>;
 
 /// <summary>
 /// Обработчик запроса на получение категорий.
 /// </summary>
 public class GetCategoriesQueryHandler(IApplicationDbContext _dbContext, IMapper _mapper)
-    : IRequestHandler<GetCategoriesQuery, Result<List<GetCategoriesResponse>>>
+    : IRequestHandler<GetCategoriesQuery, Result<PaginatedResponse<GetCategoriesResponse>>>
 {
-    public async Task<Result<List<GetCategoriesResponse>>> Handle(
+    public async Task<Result<PaginatedResponse<GetCategoriesResponse>>> Handle(
         GetCategoriesQuery request,
         CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Category>()
-            .GetProjectedListAsync<Category, GetCategoriesResponse>(_mapper, cancellationToken);
+            .GetPaginatedListAsync<Category, GetCategoriesResponse>(request, _mapper, cancellationToken);
     }
 }
 

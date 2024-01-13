@@ -1,5 +1,11 @@
 ﻿namespace HA.Application.Common.Results;
 
+/// <summary>
+/// Информация о ошибке.
+/// </summary>
+/// <param name="code">Код.</param>
+/// <param name="description">Описание.</param>
+/// <param name="reason">Причина.</param>
 public class Error(
     string code,
     string? description,
@@ -10,7 +16,7 @@ public class Error(
     { }
 
     public Error(string code, string? description)
-        : this(code, description: null, [])
+        : this(code, description, [])
     { }
 
     public Error(string code, Dictionary<string, string[]> reason)

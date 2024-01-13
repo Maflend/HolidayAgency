@@ -25,8 +25,8 @@ public static class GetUnprocessedOrdersEndpoint
             });
     }
 
-    internal static Task<IResult> GetUnprocessedOrdersAsync(ISender sender)
+    internal static Task<IResult> GetUnprocessedOrdersAsync(ISender sender, [AsParameters] GetUnprocessedOrdersQuery query)
     {
-        return sender.Send(new GetUnprocessedOrdersQuery()).ToMinimalApiAsync();
+        return sender.Send(query).ToMinimalApiAsync();
     }
 }

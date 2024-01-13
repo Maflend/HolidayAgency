@@ -1,4 +1,6 @@
-﻿namespace HA.Application.Common.Models.Paging;
+﻿using System.ComponentModel;
+
+namespace HA.Application.Common.Models.Paging;
 
 /// <summary>
 /// Пагинация.
