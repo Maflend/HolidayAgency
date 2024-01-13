@@ -1,10 +1,10 @@
-﻿using HA.Application.Dependencies.DataAccess.Clients.Queries;
+﻿using HA.Application.Common.Results;
+using HA.Application.Dependencies.DataAccess.Clients.Queries;
 using HA.Application.Dependencies.DataAccess.Common.Queries;
 using HA.Application.Dependencies.Persistence;
 using HA.Domain.Categories;
 using HA.Domain.Clients;
 using HA.Domain.Orders;
-using HA.ResultDomain;
 using MediatR;
 
 namespace HA.Application.UseCases.Orders.CreateOrder;
@@ -19,6 +19,9 @@ public class CreateOrderCommandHandler(IApplicationDbContext dbContext)
         client ??= new Client(request.FirstName, request.LastName, request.Phone, request.Patronymic);
 
         var category = await dbContext.Set<Category>().GetByIdAsync(request.CategoryId, cancellationToken);
+
+        if (category is null)
+            return Result<Guid>.Fail(new Error("CreateOrder.CategoryNotFound"));
 
         var unprocessedOrder = new UnprocessedOrder(
             category!,

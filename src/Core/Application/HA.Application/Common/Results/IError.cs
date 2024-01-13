@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace HA.ResultDomain;
+namespace HA.Application.Common.Results;
 
 public interface IError
 {

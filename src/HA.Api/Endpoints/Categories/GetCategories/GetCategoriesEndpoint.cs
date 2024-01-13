@@ -1,5 +1,5 @@
-﻿using HA.Application.UseCases.Categories.GetCategories;
-using HA.ResultAsp.MinimalApi;
+﻿using HA.Application.Common.Results;
+using HA.Application.UseCases.Categories.GetCategories;
 using MediatR;
 
 namespace HA.Api.Endpoints.Categories.GetCategories;
@@ -25,9 +25,9 @@ public static class GetCategoriesEndpoint
             });
     }
 
-    internal static Task<IResult> GetCategoriesAsync(
+    internal static Task<Result<List<GetCategoriesResponse>>> GetCategoriesAsync(
         ISender sender)
     {
-        return sender.Send(new GetCategoriesQuery()).ToMinimalApiResult();
+        return sender.Send(new GetCategoriesQuery());
     }
 }

@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using HA.Application.Common.Behaviors;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -11,8 +10,12 @@ public static class DependencyConfiguration
     {
         var assembly = Assembly.GetExecutingAssembly();
 
-        services.AddMediatR(conf => conf.RegisterServicesFromAssembly(assembly))
-            .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPiplineBehavior<,>));
+        services.AddMediatR(conf =>
+        {
+            conf
+            .RegisterServicesFromAssembly(assembly)
+            .AddOpenBehavior(typeof(ValidationPiplineBehavior<,>), ServiceLifetime.Scoped);
+        });
 
         services.AddAutoMapper(assembly);
         services.AddValidatorsFromAssembly(assembly);

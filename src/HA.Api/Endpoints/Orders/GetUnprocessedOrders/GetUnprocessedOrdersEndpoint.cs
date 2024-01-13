@@ -1,5 +1,5 @@
-﻿using HA.Application.UseCases.Orders.GetUnprocessedOrders;
-using HA.ResultAsp.MinimalApi;
+﻿using HA.Api.Extensions;
+using HA.Application.UseCases.Orders.GetUnprocessedOrders;
 using MediatR;
 
 namespace HA.Api.Endpoints.Orders.GetUnprocessedOrders;
@@ -25,9 +25,8 @@ public static class GetUnprocessedOrdersEndpoint
             });
     }
 
-    internal static Task<IResult> GetUnprocessedOrdersAsync(
-        ISender sender)
+    internal static Task<IResult> GetUnprocessedOrdersAsync(ISender sender)
     {
-        return sender.Send(new GetUnprocessedOrdersQuery()).ToMinimalApiResult();
+        return sender.Send(new GetUnprocessedOrdersQuery()).ToMinimalApiAsync();
     }
 }

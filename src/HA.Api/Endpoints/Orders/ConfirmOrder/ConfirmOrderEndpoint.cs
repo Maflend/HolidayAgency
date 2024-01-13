@@ -1,8 +1,8 @@
 ﻿using HA.Api.Endpoints.Orders.ConfirmOrder.Requests;
+using HA.Api.Extensions;
+using HA.Application.Common.Results;
 using HA.Application.UseCases.Orders.ConfirmOrder;
-using HA.ResultAsp.MinimalApi;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
 namespace HA.Api.Endpoints.Orders.ConfirmOrder;
@@ -19,7 +19,7 @@ public static class ConfirmOrderEndpoint
     {
         group.MapPost("{id}/confirm", ConfirmAsync)
             .Produces(200, typeof(Guid))
-            .Produces(400, typeof(ValidationProblemDetails))
+            .Produces(400, typeof(Result<>))
             .WithOpenApi(opts =>
             {
                 opts.Summary = "Подтверждение заказа.";
@@ -32,12 +32,6 @@ public static class ConfirmOrderEndpoint
                         In = ParameterLocation.Query,
                         Description = "Идентификатор необработанного заказа.",
                         Required = true
-                    },
-                    new OpenApiParameter()
-                    {
-                        Name = "confirmOrderRequest",
-                        Description = "Информация для подтверждения заказа.",
-                        Required = true
                     }
                 };
 
@@ -47,13 +41,13 @@ public static class ConfirmOrderEndpoint
 
     internal static Task<IResult> ConfirmAsync(
      ISender sender,
-     [FromRoute] Guid id,
-     [FromBody] ConfirmOrderRequest confirmOrderRequest)
+     Guid id,
+     ConfirmOrderRequest confirmOrderRequest)
     {
         return sender.Send(new ConfirmOrderCommand(
            id,
            confirmOrderRequest.EventPlan,
            confirmOrderRequest.Peoples,
-           confirmOrderRequest.DiscountPerHour)).ToMinimalApiResult();
+           confirmOrderRequest.DiscountPerHour)).ToMinimalApiAsync();
     }
 }

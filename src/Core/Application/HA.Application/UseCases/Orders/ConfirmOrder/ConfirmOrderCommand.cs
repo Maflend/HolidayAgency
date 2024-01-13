@@ -1,4 +1,4 @@
-﻿using HA.ResultDomain;
+﻿using HA.Application.Common.Results;
 using MediatR;
 
 namespace HA.Application.UseCases.Orders.ConfirmOrder;

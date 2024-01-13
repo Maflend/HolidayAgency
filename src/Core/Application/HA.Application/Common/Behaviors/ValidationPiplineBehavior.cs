@@ -1,22 +1,18 @@
 ﻿using FluentValidation;
-using HA.Application.Common.Models.Errors;
-using HA.ResultDomain;
+using HA.Application.Common.Results;
 using MediatR;
 
 namespace HA.Application.Common.Behaviors;
 
-public class ValidationPiplineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TResponse : ResultBase, new()
-    where TRequest : notnull
+public class ValidationPiplineBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> _validators) 
+    : IPipelineBehavior<TRequest, TResponse>
+    where TResponse : IResultBase, new()
+    where TRequest : IRequest<TResponse>
 {
-    private readonly IEnumerable<IValidator<TRequest>> _validators;
-
-    public ValidationPiplineBehavior(IEnumerable<IValidator<TRequest>> validators)
-    {
-        _validators = validators;
-    }
-
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(
+        TRequest request,
+        RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
     {
         if (!_validators.Any())
         {
@@ -41,9 +37,14 @@ public class ValidationPiplineBehavior<TRequest, TResponse> : IPipelineBehavior<
 
         if (errorsDictionary.Count != 0)
         {
+            var requestName = typeof(TRequest).Name;
+            var name = requestName.EndsWith("Query") ?
+                requestName[..requestName.IndexOf("Query")] :
+                requestName[..requestName.IndexOf("Command")];
+
             var result = new TResponse
             {
-                Error = new ValidationError(errorsDictionary)
+                Error = new Error(name + ".Invalid", errorsDictionary)
             };
 
             return result;

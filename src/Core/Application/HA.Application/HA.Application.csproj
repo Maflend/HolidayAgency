@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Infrastructure\HA.ResultDomain\HA.ResultDomain.csproj" />
     <ProjectReference Include="..\..\Domain\HA.Domain\HA.Domain.csproj" />
   </ItemGroup>
 

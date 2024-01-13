@@ -1,4 +1,4 @@
-﻿namespace HA.ResultDomain;
+﻿namespace HA.Application.Common.Results;
 
 public class Result<TData> : ResultBase
 {
@@ -28,7 +28,7 @@ public class Result<TData> : ResultBase
         return new Result<TData>(success);
     }
 
-    public static implicit operator Result<TData> (TData value)
+    public static implicit operator Result<TData>(TData value)
     {
         return new Result<TData>(value);
     }

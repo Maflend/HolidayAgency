@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using HA.Application.Common.Models.Paging;
+using HA.Application.Common.Results;
 using HA.Application.Dependencies.DataAccess.Common.Queries;
 using HA.Application.Dependencies.Persistence;
 using HA.Domain.Categories;
-using HA.ResultDomain;
 using MediatR;
 
 namespace HA.Application.UseCases.Categories.GetCategories;

@@ -1,7 +1,6 @@
-﻿using HA.Application.UseCases.Clients.GetClientById;
-using HA.ResultAsp.MinimalApi;
+﻿using HA.Application.Common.Results;
+using HA.Application.UseCases.Clients.GetClientById;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HA.Api.Endpoints.Clients.GetClientById;
 
@@ -20,11 +19,11 @@ public static class GetClientByIdEndpoint
             });
     }
 
-    internal static Task<IResult> GetClientByIdAsync(
-        [FromRoute] Guid id,
+    internal static Task<Result<GetClientByIdResponse>> GetClientByIdAsync(
+        Guid id,
         ISender sender)
     {
-        return sender.Send(new GetClientByIdQuery(id)).ToMinimalApiResult();
+        return sender.Send(new GetClientByIdQuery(id));
     }
 }
 
