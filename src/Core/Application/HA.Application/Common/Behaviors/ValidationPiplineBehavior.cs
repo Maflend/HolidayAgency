@@ -6,7 +6,7 @@ namespace HA.Application.Common.Behaviors;
 
 public class ValidationPiplineBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> _validators) 
     : IPipelineBehavior<TRequest, TResponse>
-    where TResponse : IResultBase, new()
+    where TResponse : IResult, new()
     where TRequest : IRequest<TResponse>
 {
     public async Task<TResponse> Handle(
@@ -44,7 +44,7 @@ public class ValidationPiplineBehavior<TRequest, TResponse>(IEnumerable<IValidat
 
             var result = new TResponse
             {
-                Error = new Error(name + ".Invalid", errorsDictionary)
+                Error = new Error(name + ".InvalidRequestData", errorsDictionary)
             };
 
             return result;

@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HA.Api.Startup;
 
+/// <summary>
+/// Глобальный обработчик исключений.
+/// </summary>
 internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger)
     : IExceptionHandler
 {
@@ -29,11 +32,11 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _lo
             await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
         }
 
-        if (exception is InvalidPaginationException)
+        if (exception is InvalidPaginationException ex)
         {
             httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
 
-            var result = Result<ResultEmpty>.Fail(new Error("Pagination", "Неверные параметры для постраничного получения"));
+            var result = Result<ResultDataEmpty>.Fail(new Error("Pagination", ex.Message));
             await httpContext.Response.WriteAsJsonAsync(result, cancellationToken);
         }
 

@@ -17,13 +17,13 @@ public record GetClientByIdQuery(Guid Id) : IRequest<Result<GetClientByIdRespons
 /// <summary>
 /// Обработчик запроса на получение клиента по идентификатору.
 /// </summary>
-public class GetClientByidQueryHandler(IApplicationDbContext _dbContext, IMapper _mapper)
+public class GetClientByidQueryHandler(IDbContext _dbContext, IMapper _mapper)
     : IRequestHandler<GetClientByIdQuery, Result<GetClientByIdResponse>>
 {
     public async Task<Result<GetClientByIdResponse>> Handle(GetClientByIdQuery request, CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Client>()
             .GetProjectedByIdAsync<Client, GetClientByIdResponse>(request.Id, _mapper, cancellationToken)
-            .ThrowResourceNotFound(request.Id);
+            .ThrowResourceNotFound(typeof(Client), request.Id);
     }
 }

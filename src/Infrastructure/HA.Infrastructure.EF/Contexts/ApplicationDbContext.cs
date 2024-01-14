@@ -8,7 +8,7 @@ using HA.Domain.Files;
 using HA.Domain.Common;
 
 namespace HA.Infrastructure.EF.Contexts;
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+public class ApplicationDbContext : DbContext, IDbContext
 {
     public ApplicationDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
 
@@ -27,7 +27,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
-    DbSet<TEntity> IApplicationDbContext.Set<TEntity>()
+    DbSet<TEntity> IDbContext.Set<TEntity>()
     {
         return Set<TEntity>();
     }

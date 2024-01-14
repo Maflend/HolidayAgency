@@ -9,7 +9,7 @@ using MediatR;
 
 namespace HA.Application.UseCases.Orders.CreateOrder;
 
-public class CreateOrderCommandHandler(IApplicationDbContext dbContext) 
+public class CreateOrderCommandHandler(IDbContext dbContext) 
     : IRequestHandler<CreateOrderCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)

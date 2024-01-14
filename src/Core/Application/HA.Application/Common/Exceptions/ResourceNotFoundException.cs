@@ -5,10 +5,10 @@
 /// </summary>
 public class ResourceNotFoundException : Exception
 {
-    public const string ObjectWithIdMessagePattern = "Ресурс {0} с Id = {1} не найден";
+    public const string ResourceNotFoundMessagePattern = "Ресурс {0} с Id = {1} не найден";
 
     public ResourceNotFoundException(string resource, Guid id)
-        : base(string.Format(ObjectWithIdMessagePattern, resource, id)) { }
+        : base(string.Format(ResourceNotFoundMessagePattern, resource, id)) { }
 
     public ResourceNotFoundException(string message) : base(message) { }
 

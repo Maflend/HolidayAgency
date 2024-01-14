@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel;
 
-namespace HA.Application.Common.Models.Paging;
+namespace HA.Application.Common.Models.Pagination;
 
 /// <summary>
 /// Пагинация.
 /// </summary>
-public abstract record Paging : IPaged
+public abstract record Paged : IPaged
 {
     [DefaultValue(1)]
     public int PageNumber { get; init; } = 1;

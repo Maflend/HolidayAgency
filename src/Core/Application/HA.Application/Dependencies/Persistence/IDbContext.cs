@@ -2,7 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace HA.Application.Dependencies.Persistence;
-public interface IApplicationDbContext
+
+/// <summary>
+/// Абстракция для доступа к данным.
+/// </summary>
+public interface IDbContext
 {
     DbSet<TEntity> Set<TEntity>() where TEntity : Entity;
 

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using System.Reflection;
 
-namespace HA.Application.Common.Mapping;
+namespace HA.Application.Common.Mappings;
 
 public static class MappingExtensions
 {

@@ -16,7 +16,7 @@ public record GetUnprocessedOrderByIdQuery(Guid Id) : IRequest<Result<GetUnproce
 /// <summary>
 /// Обработчик запроса на получение необработанного заказа по идентификатору.
 /// </summary>
-public class GetUnprocessedOrderByIdQueryHandler(IApplicationDbContext _dbContext, IMapper _mapper) 
+public class GetUnprocessedOrderByIdQueryHandler(IDbContext _dbContext, IMapper _mapper) 
     : IRequestHandler<GetUnprocessedOrderByIdQuery, Result<GetUnprocessedOrderByIdResponse>>
 {
     public async Task<Result<GetUnprocessedOrderByIdResponse>> Handle(
@@ -25,6 +25,6 @@ public class GetUnprocessedOrderByIdQueryHandler(IApplicationDbContext _dbContex
     {
         return await _dbContext.Set<UnprocessedOrder>()
             .GetProjectedByIdAsync<UnprocessedOrder, GetUnprocessedOrderByIdResponse>(request.Id, _mapper, cancellationToken)
-            .ThrowResourceNotFound(request.Id);
+            .ThrowResourceNotFound(typeof(UnprocessedOrder), request.Id);
     }
 }

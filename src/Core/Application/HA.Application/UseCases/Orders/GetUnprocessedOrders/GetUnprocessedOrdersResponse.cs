@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using HA.Application.Common.Mapping;
+using HA.Application.Common.Mappings;
 using HA.Application.UseCases.Orders.GetUnprocessedOrders.Responses;
 using HA.Domain.Orders;
 

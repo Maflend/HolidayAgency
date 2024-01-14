@@ -1,9 +1,8 @@
 ﻿using HA.Api.Endpoints.Orders.ConfirmOrder.Requests;
 using HA.Api.Extensions;
-using HA.Application.Common.Results;
 using HA.Application.UseCases.Orders.ConfirmOrder;
 using MediatR;
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HA.Api.Endpoints.Orders.ConfirmOrder;
 
@@ -19,21 +18,11 @@ public static class ConfirmOrderEndpoint
     {
         group.MapPost("{id:guid}/confirm", ConfirmAsync)
             .Produces(200, typeof(Guid))
-            .Produces(400, typeof(Result<>))
+            .Produces(400, typeof(Application.Common.Results.Result<>))
             .WithOpenApi(opts =>
             {
                 opts.Summary = "Подтверждение заказа.";
                 opts.Description = "Подтверждение необработанного заказа.";
-                opts.Parameters = new List<OpenApiParameter>()
-                {
-                    new OpenApiParameter()
-                    {
-                        Name = "id",
-                        In = ParameterLocation.Query,
-                        Description = "Идентификатор необработанного заказа.",
-                        Required = true
-                    }
-                };
 
                 return opts;
             });
@@ -41,8 +30,8 @@ public static class ConfirmOrderEndpoint
 
     internal static Task<IResult> ConfirmAsync(
         ISender sender,
-        Guid id,
-        ConfirmOrderRequest confirmOrderRequest)
+        [FromRoute] Guid id,
+        [FromBody] ConfirmOrderRequest confirmOrderRequest)
     {
         return sender.Send(new ConfirmOrderCommand(
            id,

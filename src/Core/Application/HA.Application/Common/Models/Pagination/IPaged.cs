@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace HA.Application.Common.Models.Paging;
+namespace HA.Application.Common.Models.Pagination;
 
 /// <summary>
 /// Пагинация.

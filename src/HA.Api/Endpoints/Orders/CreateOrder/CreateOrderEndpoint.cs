@@ -1,5 +1,4 @@
 ﻿using HA.Api.Extensions;
-using HA.Application.Common.Results;
 using HA.Application.UseCases.Orders.CreateOrder;
 using MediatR;
 
@@ -17,7 +16,7 @@ public static class CreateOrderEndpoint
     {
         group.MapPost("", CreateAsync)
             .Produces(200, typeof(Guid))
-            .Produces(400, typeof(Result<>))
+            .Produces(400, typeof(Application.Common.Results.Result<>))
             .WithOpenApi(opts =>
             {
                 opts.Summary = "Создание заказа.";

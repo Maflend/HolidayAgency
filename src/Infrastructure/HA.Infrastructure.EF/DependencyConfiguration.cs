@@ -14,7 +14,7 @@ public static class DependencyConfiguration
             options.UseNpgsql(configuration.GetConnectionString("Postgres"));
         });
 
-        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+        services.AddScoped<IDbContext, ApplicationDbContext>();
 
         return services;
     }

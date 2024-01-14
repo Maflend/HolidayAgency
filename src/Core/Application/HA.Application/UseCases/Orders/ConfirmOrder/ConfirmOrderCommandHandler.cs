@@ -10,14 +10,14 @@ namespace HA.Application.UseCases.Orders.ConfirmOrder;
 /// <summary>
 /// Обработчик команды подтверждения заказа.
 /// </summary>
-public class ConfirmOrderCommandHandler(IApplicationDbContext _applicationDbContext) 
+public class ConfirmOrderCommandHandler(IDbContext _applicationDbContext) 
     : IRequestHandler<ConfirmOrderCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(ConfirmOrderCommand request, CancellationToken cancellationToken)
     {
         var unprocessedOrder = await _applicationDbContext.Set<UnprocessedOrder>()
             .GetByIdAsync(request.UnprocessedOrderId, cancellationToken)
-            .ThrowResourceNotFound(request.UnprocessedOrderId);
+            .ThrowResourceNotFound(typeof(UnprocessedOrder), request.UnprocessedOrderId);
 
         var confirmedOrder = new ConfirmedOrder(
             unprocessedOrder,

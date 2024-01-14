@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HA.Application.Common.Exceptions;
-using HA.Application.Common.Mapping;
-using HA.Application.Common.Models.Paging;
+using HA.Application.Common.Mappings;
+using HA.Application.Common.Models.Pagination;
 using HA.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
@@ -12,6 +12,9 @@ namespace HA.Application.Dependencies.DataAccess.Common.Queries;
 
 internal static class EntityQuery
 {
+    /// <summary>
+    /// Получить сущность по идентификатору.
+    /// </summary>
     public static Task<TEntity?> GetByIdAsync<TEntity>(
         this IQueryable<TEntity> entities,
         Guid id,
@@ -21,6 +24,9 @@ internal static class EntityQuery
         return entities.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
+    /// <summary>
+    /// Получить ProjectTo сущность по идентификатору.
+    /// </summary>
     public static Task<TDto?> GetProjectedByIdAsync<TEntity, TDto>(
         this IQueryable<TEntity> entities,
         Guid id,
@@ -34,6 +40,9 @@ internal static class EntityQuery
             .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
+    /// <summary>
+    /// Получить ProjectTo сущности.
+    /// </summary>
     public static Task<List<TDto>> GetProjectedListAsync<TEntity, TDto>(
         this IQueryable<TEntity> entities,
         IMapper mapper,
@@ -46,9 +55,13 @@ internal static class EntityQuery
             .ToListAsync(cancellationToken);
     }
 
-    public static async Task<PaginatedResponse<TDto>> GetPaginatedListAsync<TEntity, TDto>(
+    /// <summary>
+    /// Получить <see cref="PaginatedResponse{TDto}"/>.
+    /// </summary>
+    /// <exception cref="InvalidPaginationException">Неверные параметры для постраничного получения.</exception>
+    public static async Task<PaginatedResponse<TDto>> GetPaginatedResponseAsync<TEntity, TDto>(
         this IQueryable<TEntity> source,
-        PagingAndSorting options,
+        PagedAndSorted options,
         Expression<Func<TEntity, bool>>? searchFilter,
         IMapper mapper,
         CancellationToken cancellationToken = default)
@@ -56,7 +69,9 @@ internal static class EntityQuery
         where TDto : IMapFrom<TEntity>
     {
         var totalCount = source.Count();
-        var totalPages = totalCount == 0 ? 0 : (int)Math.Ceiling(totalCount / (double)options.PageSize);
+        var totalPages = totalCount == 0 ? 
+            0 : 
+            (int)Math.Ceiling(totalCount / (double)options.PageSize);
 
         var query = source
             .Skip((options.PageNumber - 1) * options.PageSize)
@@ -70,7 +85,7 @@ internal static class EntityQuery
             }
             catch (Exception ex)
             {
-                throw new InvalidPaginationException(ex.Message, ex);
+                throw new InvalidPaginationException("Неверные параметры для постраничного получения", ex);
             }
         }
 

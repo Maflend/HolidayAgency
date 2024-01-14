@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using HA.Application.Common.Expressions;
-using HA.Application.Common.Models.Paging;
+using HA.Application.Common.Models.Pagination;
 using HA.Application.Common.Results;
 using HA.Application.Dependencies.DataAccess.Common.Queries;
 using HA.Application.Dependencies.Persistence;
@@ -13,7 +13,7 @@ namespace HA.Application.UseCases.Categories.GetCategories;
 /// <summary>
 /// Запрос на получение всех категорий.
 /// </summary>
-public record GetCategoriesQuery : PagingAndSorting, IRequest<Result<PaginatedResponse<GetCategoriesResponse>>>
+public record GetCategoriesQuery : PagedAndSorted, IRequest<Result<PaginatedResponse<GetCategoriesResponse>>>
 {
     /// <summary>
     /// Название.
@@ -24,7 +24,7 @@ public record GetCategoriesQuery : PagingAndSorting, IRequest<Result<PaginatedRe
 /// <summary>
 /// Обработчик запроса на получение категорий.
 /// </summary>
-public class GetCategoriesQueryHandler(IApplicationDbContext _dbContext, IMapper _mapper)
+public class GetCategoriesQueryHandler(IDbContext _dbContext, IMapper _mapper)
     : IRequestHandler<GetCategoriesQuery, Result<PaginatedResponse<GetCategoriesResponse>>>
 {
     public async Task<Result<PaginatedResponse<GetCategoriesResponse>>> Handle(
@@ -32,7 +32,7 @@ public class GetCategoriesQueryHandler(IApplicationDbContext _dbContext, IMapper
         CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Category>()
-            .GetPaginatedListAsync<Category, GetCategoriesResponse>(request, SearchFilter(request), _mapper, cancellationToken);
+            .GetPaginatedResponseAsync<Category, GetCategoriesResponse>(request, SearchFilter(request), _mapper, cancellationToken);
     }
 
     private static Expression<Func<Category, bool>> SearchFilter(GetCategoriesQuery query)

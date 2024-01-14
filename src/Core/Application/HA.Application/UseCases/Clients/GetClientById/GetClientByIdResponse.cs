@@ -1,4 +1,4 @@
-﻿using HA.Application.Common.Mapping;
+﻿using HA.Application.Common.Mappings;
 using HA.Domain.Clients;
 using HA.Domain.Common;
 
