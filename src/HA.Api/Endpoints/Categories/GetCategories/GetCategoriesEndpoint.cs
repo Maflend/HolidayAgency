@@ -1,7 +1,5 @@
-﻿using HA.Api.Extensions;
+﻿using HA.Application.Common.Models.Pagination;
 using HA.Application.UseCases.Categories.GetCategories;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HA.Api.Endpoints.Categories.GetCategories;
 
@@ -16,7 +14,8 @@ public static class GetCategoriesEndpoint
     public static void MapGetCategoriesEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("", GetCategoriesAsync)
-            .Produces(200, typeof(List<GetCategoriesResponse>))
+            .Produces(StatusCodes.Status200OK, typeof(Result<PaginatedResponse<GetCategoriesResponse>>))
+            .Produces(StatusCodes.Status400BadRequest, typeof(Result<>))
             .WithOpenApi(opts =>
             {
                 opts.Summary = "Получить категории.";
@@ -26,7 +25,7 @@ public static class GetCategoriesEndpoint
             });
     }
 
-    internal static Task<IResult> GetCategoriesAsync(ISender sender, [AsParameters] GetCategoriesQuery query)
+    internal static Task<HttpIResult> GetCategoriesAsync(ISender sender, [AsParameters] GetCategoriesQuery query)
     {
         return sender.Send(query).ToMinimalApiAsync();
     }

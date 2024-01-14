@@ -1,7 +1,6 @@
 ﻿using HA.Application.Common.Exceptions;
 using HA.Application.Common.Results;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HA.Api.Startup;
 
@@ -22,21 +21,15 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _lo
         {
             httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
 
-            var problemDetails = new ProblemDetails()
-            {
-                Status = StatusCodes.Status404NotFound,
-                Title = resourceNotFoundException.Message,
-                Type = "Resource not found"
-            };
-
-            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+            var result = Result<ResultDataEmpty>.Fail(new Error("ResourceNotFound", resourceNotFoundException.Message));
+            await httpContext.Response.WriteAsJsonAsync(result, cancellationToken);
         }
 
-        if (exception is InvalidPaginationException ex)
+        if (exception is InvalidPaginationException invalidPaginationException)
         {
             httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
 
-            var result = Result<ResultDataEmpty>.Fail(new Error("Pagination", ex.Message));
+            var result = Result<ResultDataEmpty>.Fail(new Error("Pagination", invalidPaginationException.Message));
             await httpContext.Response.WriteAsJsonAsync(result, cancellationToken);
         }
 

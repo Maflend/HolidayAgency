@@ -1,6 +1,4 @@
-﻿using HA.Api.Extensions;
-using HA.Application.UseCases.Orders.CreateOrder;
-using MediatR;
+﻿using HA.Application.UseCases.Orders.CreateOrder;
 
 namespace HA.Api.Endpoints.Orders.CreateOrder;
 
@@ -15,8 +13,8 @@ public static class CreateOrderEndpoint
     public static void MapCreateOrderEndpoint(this RouteGroupBuilder group)
     {
         group.MapPost("", CreateAsync)
-            .Produces(200, typeof(Guid))
-            .Produces(400, typeof(Application.Common.Results.Result<>))
+            .Produces(StatusCodes.Status200OK, typeof(Result<Guid>))
+            .Produces(StatusCodes.Status400BadRequest, typeof(Result<>))
             .WithOpenApi(opts =>
             {
                 opts.Summary = "Создание заказа.";
@@ -26,7 +24,7 @@ public static class CreateOrderEndpoint
             });
     }
 
-    internal static Task<IResult> CreateAsync(
+    internal static Task<HttpIResult> CreateAsync(
         ISender sender,
         CreateOrderCommand createOrderCommand)
     {

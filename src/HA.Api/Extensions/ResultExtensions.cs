@@ -1,5 +1,4 @@
 ﻿using HA.Application.Common.Results;
-using HttpIResult = Microsoft.AspNetCore.Http.IResult;
 
 namespace HA.Api.Extensions;
 

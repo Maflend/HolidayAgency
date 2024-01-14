@@ -1,6 +1,7 @@
 ﻿using HA.Api.Extensions;
+using HA.Application.Common.Models.Pagination;
+using HA.Application.Common.Results;
 using HA.Application.UseCases.Orders.GetUnprocessedOrders;
-using MediatR;
 
 namespace HA.Api.Endpoints.Orders.GetUnprocessedOrders;
 
@@ -15,7 +16,8 @@ public static class GetUnprocessedOrdersEndpoint
     public static void MapGetUnprocessedOrdersEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("unprocessed", GetUnprocessedOrdersAsync)
-            .Produces(200, typeof(List<GetUnprocessedOrdersResponse>))
+            .Produces(StatusCodes.Status200OK, typeof(Result<PaginatedResponse<GetUnprocessedOrdersResponse>>))
+            .Produces(StatusCodes.Status400BadRequest, typeof(Result<>))
             .WithOpenApi(opts =>
             {
                 opts.Summary = "Получить необработанные заказы.";
@@ -25,7 +27,7 @@ public static class GetUnprocessedOrdersEndpoint
             });
     }
 
-    internal static Task<IResult> GetUnprocessedOrdersAsync(ISender sender, [AsParameters] GetUnprocessedOrdersQuery query)
+    internal static Task<HttpIResult> GetUnprocessedOrdersAsync(ISender sender, [AsParameters] GetUnprocessedOrdersQuery query)
     {
         return sender.Send(query).ToMinimalApiAsync();
     }
