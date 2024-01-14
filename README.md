@@ -30,6 +30,8 @@
 | FluentValidation     |   https://github.com/FluentValidation/FluentValidation        |
 | MediatR     |  https://github.com/jbogard/MediatR         |
 | AutoMapper     | https://github.com/AutoMapper/AutoMapper          |
+| Serilog   | https://github.com/serilog/serilog-aspnetcore       |
+| SerilogSinksSeq   | https://github.com/datalust/serilog-sinks-seq     |
 
 <br>
 
@@ -44,6 +46,12 @@
 <details><summary>Запуск docker compose</summary>
 <br>
 Запуск производится с помощью docker compose. <br>
+</details>
+<details><summary>Описание контейнеров</summary>
+<br>
+ha.api - бэкенд <br>
+ha.postgres - postgre БД <br>
+ha.seq - Seq для просмотра логгов <br>
 </details>
 
 <details><summary>Подготовка базы данных</summary>
