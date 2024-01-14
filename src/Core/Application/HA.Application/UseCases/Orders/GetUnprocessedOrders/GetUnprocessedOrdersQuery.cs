@@ -18,12 +18,12 @@ public record GetUnprocessedOrdersQuery : PagingAndSorting, IRequest<Result<Pagi
     /// <summary>
     /// Кол-во часов больше или равно чем.
     /// </summary>
-    public int? TheNumberOfHoursIsMoreOrEqThan { get; set; }
+    public int? TheNumberOfHoursIsMoreOrEqThan { get; init; }
 
     /// <summary>
     /// Кол-во часов меньше или равно чем.
     /// </summary>
-    public int? TheNumberOfHoursIsLessOrEqThan { get; set; }
+    public int? TheNumberOfHoursIsLessOrEqThan { get; init; }
 }
 
 /// <summary>
