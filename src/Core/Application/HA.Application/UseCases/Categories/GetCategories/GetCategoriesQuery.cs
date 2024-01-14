@@ -24,7 +24,6 @@ public class GetCategoriesQueryHandler(IApplicationDbContext _dbContext, IMapper
         CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Category>()
-            .GetPaginatedListAsync<Category, GetCategoriesResponse>(request, _mapper, cancellationToken);
+            .GetPaginatedListAsync<Category, GetCategoriesResponse>(request, null, _mapper, cancellationToken);
     }
 }
-

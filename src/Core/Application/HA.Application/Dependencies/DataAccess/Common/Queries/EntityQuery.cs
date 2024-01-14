@@ -6,6 +6,7 @@ using HA.Application.Common.Models.Paging;
 using HA.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 
 namespace HA.Application.Dependencies.DataAccess.Common.Queries;
 
@@ -48,6 +49,7 @@ internal static class EntityQuery
     public static async Task<PaginatedResponse<TDto>> GetPaginatedListAsync<TEntity, TDto>(
         this IQueryable<TEntity> source,
         PagingAndSorting options,
+        Expression<Func<TEntity, bool>>? searchFilter,
         IMapper mapper,
         CancellationToken cancellationToken = default)
         where TEntity : Entity
@@ -70,6 +72,11 @@ internal static class EntityQuery
             {
                 throw new InvalidPaginationException(ex.Message, ex);
             }
+        }
+
+        if (searchFilter is not null)
+        {
+            query = query.Where(searchFilter);
         }
 
         var list = await query.GetProjectedListAsync<TEntity, TDto>(mapper, cancellationToken: cancellationToken);
