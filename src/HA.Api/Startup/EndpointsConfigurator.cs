@@ -1,6 +1,8 @@
 ﻿using HA.Api.Endpoints.Categories;
+using HA.Api.Endpoints.ClientOrders;
 using HA.Api.Endpoints.Clients;
-using HA.Api.Endpoints.Orders;
+using HA.Api.Endpoints.OrdersModeration;
+using HA.Api.Endpoints.Timetables;
 
 namespace HA.Api.Startup;
 
@@ -15,8 +17,10 @@ public static class EndpointsConfigurator
     public static WebApplication UseEndpoints(this WebApplication app)
     {
         app.MapCategoryEndpoints();
-        app.MapOrdersEndpoints();
+        app.MapClientOrdersEndpoints();
         app.MapСlientsEndpoints();
+        app.MapOrdersModerationEndpoints();
+        app.MapTimetablesEndpoints();
 
         return app;
     }
